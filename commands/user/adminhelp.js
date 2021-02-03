@@ -14,7 +14,6 @@ module.exports = {
                 .setDescription(`- **${bhconfig.prefix}help** gives list of commands\n\
                 - **${bhconfig.prefix}kick** kicks selected user *[${bhconfig.prefix}<command> + <@user> + <reason (if any)>]*\n\
                 - **${bhconfig.prefix}ban** bans selected user *[${bhconfig.prefix}<command> + <@user> + <reason (if any)>]*\n\
-                - **${bhconfig.prefix}mute** mutes selected user *[${bhconfig.prefix}<command> + <@user> + <time (Eg.30m 1h...)>]*\n\
                 - **${bhconfig.prefix}warn** warns selected user *[${bhconfig.prefix}<command> + <@user>]*\n\
                 - **${bhconfig.prefix}purge** purges messages *[${bhconfig.prefix}<command> + <quantity to delete>]*\n\
                 - **${bhconfig.prefix}nuke** deletes the channel and creates a replica **(this cannot be undone)**\n\
