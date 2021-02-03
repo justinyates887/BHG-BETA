@@ -19,7 +19,7 @@ module.exports = {
                        let embed = new Discord.MessageEmbed() //sets send card message
                            .setAuthor("Error!") // Header of card
                            .setColor("#486dAA") //Side bar color
-                           .setDescription("No target found please @ the target your trying to ban") //main text body
+                           .setDescription("No target found please @ the target your trying to kick") //main text body
                            .setFooter(bhconfig.footer) //footer/watermark
                        return msg.channel.send(embed);
                }
