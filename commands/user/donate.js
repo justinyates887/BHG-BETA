@@ -6,14 +6,12 @@ module.exports = {
     name: 'donate',
     description: 'allows for users to donate to the betterment of the bot',
 
-    execute(client, msg, args, logs, blueLogs){
-        if (bhconfig.embeds === true) { //Checks if the embed option is true then creates and sends this embed 
+    execute(client, msg, args){
             let embed = new Discord.MessageEmbed() //sets send card message
-                .setAuthor("Your kindness helps keep developments like this free forever <3") // Header of card
+                .setAuthor("Your kindness helps keep developments like this free <3") // Header of card
                 .setColor("#486dAA") //Side bar color
-                .setDescription("**Buy us a cup of coffee**\nhttps://www.buymeacoffee.com/smallbluedev\n\n**PayPal**\nhttps://www.paypal.me/justinyates887") //main text body
-                .setFooter(bhconfig.footer) //footer/watermark
+                .setDescription("**Support us on Pateron**\nhttps://www.patreon.com/smallblue\n\n**PayPal**\nhttps://www.paypal.me/justinyates887") //main text body
+                .setFooter(`Blue Haired Girl By SmallBlue Dev`) //footer/watermark
             return msg.channel.send(embed);
-        }
     }
 }
