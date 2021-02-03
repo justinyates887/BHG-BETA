@@ -1,0 +1,162 @@
+// const bhconfig = require("../core/bhconfig.json"); //initialize bhconfig.json
+// const fs = require("fs");
+// const Discord = require("discord.js");
+
+// module.exports = {
+//     name: 'mute',
+//     description: 'mutes members',
+
+// async execute(msg, args) {
+//     //roles
+//    // const owner = bhconfig.roles.owner;
+//     const memberrole = bhconfig.roles.member;
+//     const bannedrole = bhconfig.roles.blacklisted;
+//     const staffrole = bhconfig.roles.staff;
+//     const supportteamrole = bhconfig.roles.supportTeam;
+
+//     //channels
+//     const logschannel = bhconfig.channel.logs;
+//     const suggestionschannel = bhconfig.channel.suggestions.normal;
+//     const reportschannel = bhconfig.channel.reports;
+//     const welcomengoodbyechannel = bhconfig.channel.joinLeave;
+//     const pollschannel = bhconfig.channel.polls;
+//     const announcementschannel = bhconfig.channel.announcements;
+
+
+//     if (msg.guild.owner) {
+//         let embed1 = new Discord.MessageEmbed()
+//             .setAuthor("Blue Haired Girl Setup")
+//             .setColor([0, 255, 255])
+//             .setDescription("initiating Setup Process... Please wait.")
+//             .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//         msg.channel.send(embed1).then((msg) => {
+//             let embed2 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription("Welcome to the Blue Haired Girl Setup Process.\n\nTo start the setup process please enter **Y**\nTo stop the setup process please enter **N**")
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             setTimeout(function () {
+//                 msg.edit(embed2);
+//             }, 2000);
+//         });
+//         const Tfilter = m => m.content === 'Y';
+//         msg.channel.awaitMessages(Tfilter, {
+//             max: 1,
+//             time: 15000
+//         }).then(collect => {
+//             let embed5 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription("Setup Started!\nPlease Wait...")
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             msg.channel.send(embed5);
+
+//             let embed6 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription("Phase 1 -- Has Now Started!\nStatus: Creating Channels")
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             msg.channel.send(embed6);
+
+//             //Creates Channels
+//             /*
+//             try {
+//                 msg.guild.createChannel(logschannel),
+//                     msg.guild.createChannel(suggestionschannel),
+//                     msg.guild.createChannel(reportschannel),
+//                     msg.guild.createChannel(welcomengoodbyechannel),
+//                     msg.guild.createChannel(pollschannel),
+//                     msg.guild.createChannel(announcementschannel);
+//             } catch (error) {
+//                 if (error) {
+//                     return msg.channel.send("Blue Haired Girl Diagnostics\n\nThere was an error when attempting to do an action.\nMaybe I do not have the correct permissions?");
+//                 }
+//             }
+//             */
+//            msg.guild.createChannel(logschannel, {type: "text"});
+//            msg.guild.createChannel(suggestionschannel, {type: "text"});
+//            msg.guild.createChannel(reportschannel, {type: "text"});
+//            msg.guild.createChannel(welcomengoodbyechannel, {type: "text"});
+//            msg.guild.createChannel(pollschannel, {type: "text"});
+//            msg.guild.createChannel(announcementschannel, {type: "text"});
+
+//             //Sends once channels have been created
+//             let embed7 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription("Phase 1\nStatus: COMPLETE\n\nMoving on to next phase...")
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             msg.channel.send(embed7);
+
+//             let embed8 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription("Phase 2 -- Has Now Started!\nStatus: Creating Roles")
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             msg.channel.send(embed8);
+
+//             //Creates Roles
+//             msg.guild.createRole({
+//                     name: owner,
+//                     color: [0, 250, 255],
+//                     permissions: []
+//                 }),
+//                 msg.guild.createRole({
+//                     name: memberrole,
+//                     color: [250, 254, 251],
+//                     permissions: []
+//                 }),
+//                 msg.guild.createRole({
+//                     name: staffrole,
+//                     color: [175, 88, 163],
+//                     permissions: []
+//                 }),
+//                 msg.guild.createRole({
+//                     name: bannedrole,
+//                     color: [240, 160, 0],
+//                     permissions: []
+//                 }),
+//                 msg.guild.createRole({
+//                     name: supportteamrole,
+//                     color: [255, 0, 0],
+//                     permissions: []
+//                 });
+
+//             let embed9 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription("Phase 2\nStatus: COMPLETE\n\nAll roles have now been created. Please configure the roles permissions to your liking.")
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             msg.channel.send(embed9);
+
+//             let embed10 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription(`Blue Haired Girl Setup Is Now Complete!\n\nPhases passed: 1, 2\nStatus: DONE\n\nThank you for choosing Blue Haired Girl, If you have any issues feel free to contact us on our Discord.\nVodkabot -- Ufero Team.\n\nBot Information:\nVersion: ${bhconfig.bot.version}\n\nSetup Process Closing...`)
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             return msg.channel.send(embed10);
+//         });
+
+//         const Ffilter = m => m.content === 'N';
+//         msg.channel.awaitMessages(Ffilter, {
+//             max: 1,
+//             time: 15000
+//         }).then(collect => {
+//             const msg = collect.first();
+//             let embed3 = new Discord.MessageEmbed()
+//                 .setAuthor("Blue Haired Girl Setup")
+//                 .setColor([0, 255, 255])
+//                 .setDescription("Setup is now closing.")
+//                 .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//             return msg.reply(embed3);
+//         });
+//     } else {
+//         let embed4 = new Discord.MessageEmbed()
+//             .setAuthor("No Permission")
+//             .setColor([255, 0, 0])
+//             .setDescription("Error! You do not have permission to run this command.\nOnly the guild owner can run this command.")
+//             .setFooter("Blue Haired Girl -- Ufero Team 2019");
+//         return msg.reply(embed4);
+//         }
+//     }
+// }

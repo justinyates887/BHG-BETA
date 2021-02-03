@@ -1,0 +1,61 @@
+const ms = require('ms');
+const bhconfig = require("../core/bhconfig.json"); //initialize bhconfig.json
+const fs = require("fs");
+const Discord = require("discord.js");
+const bot = new Discord.Client();
+
+module.exports = {
+    name: 'mute',
+    description: "This mutes a member",
+    execute(client, msg, args, logs, blueLogs) {
+        let muteReason; 
+        const target = msg.mentions.users.first();
+        if (target) {
+ 
+            let mainRole = msg.guild.roles.cache.find(role => role.name === 'member');
+            let muteRole = msg.guild.roles.cache.find(role => role.name === 'MUTED');
+
+            if(!muteRole){
+                if (bhconfig.embeds === true) {
+                    let embed = new Discord.MessageEmbed()
+                        .setAuthor("Oh no....")
+                        .setColor("#486dAA")
+                        .setDescription("I can't find the @MUTED role. You need to have this role in order to use our mute command.")
+                        .setFooter(bhconfig.footer)
+                    return msg.channel.send(embed);
+                }
+            }
+ 
+            let memberTarget = msg.guild.members.cache.get(target.id);
+ 
+            if (!args[1]) {
+                memberTarget.roles.remove(mainRole.id);
+                memberTarget.roles.add(muteRole.id);
+                msg.channel.send(`<@${memberTarget.user.id}> has been muted for ${ms(ms(args[1]))}`);    
+                return
+            }
+           
+            setTimeout(function () {
+                memberTarget.roles.remove(muteRole.id);
+                memberTarget.roles.add(mainRole.id);
+            }, ms(args[1]));
+
+            // Logs
+        if (logs === true) {
+            let muteEmbed = new Discord.MessageEmbed()
+                .setAuthor("Action | User Muted")
+                .setColor("#486dAA")
+                .setDescription(bhconfig.userMuted
+                    .replace(/{user}/g, target)
+                    .replace(/{userID}/g, target.id)
+                    .replace(/{staffMember}/g, msg.author)
+                    .replace(/{reason}/g, muteReason))
+                .setFooter(bhconfig.footer);
+            blueLogs.send(muteEmbed);
+        } 
+        } else {
+            msg.channel.send('Cant find that member!');
+        }
+    }
+}
+ 

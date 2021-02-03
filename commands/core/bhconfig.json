@@ -1,0 +1,14 @@
+{
+    "prefix": "bt!",
+    "noUserTagged": "You didn't tag a member!",
+    "log": true,
+    "logs": "logs",
+    "embeds": true,
+    "override": true,
+    "footer": "Blue Haired Girl By SmallBlue Dev",
+    "userBanned": "{user} Has been Banned by {staffMember} for '{reason}'",
+    "userMuted": "{user} Has been Muted by {staffMember} for '{reason}'",
+    "userKicked": "{user} Has been Kicked by {staffMember} for '{reason}'",
+    "permissionRole": "Developers",
+    "adminRole": "795324636685664296"
+  }
