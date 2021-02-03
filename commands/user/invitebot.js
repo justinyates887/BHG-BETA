@@ -6,15 +6,13 @@ module.exports = {
     name: 'invitebot',
     description: 'sends a link to invite the bot to a server',
 
-    execute(client, msg, args, logs, blueLogs){
-        if (bhconfig.embeds === true) { //Checks if the embed option is true then creates and sends this embed 
+    execute(client, msg, args){
             let embed = new Discord.MessageEmbed() //sets send card message
                 .setAuthor("Thanks for Supporting!") // Header of card
                 .setColor("#486dAA") //Side bar color
-                .setDescription("Here is the invite link for this bot:\n  https://tinyurl.com/ysesvxdb\n\
-                                Here is the link for the Music Bot: https://tinyurl.com/bkcggzki") //main text body
-                .setFooter(bhconfig.footer) //footer/watermark
+                .setDescription("- Here is the invite link for the main bot: https://tinyurl.com/ysesvxdb \n\n\
+                - Here is an invite link for the music bot: https://tinyurl.com/bkcggzki") //main text body
+                .setFooter(`Blue Haired Girl By SmallBlue Dev`) //footer/watermark
             return msg.channel.send(embed);
-        }
     }
 }

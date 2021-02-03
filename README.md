@@ -36,8 +36,8 @@ Justin Yates & Azrael
 ---------------------------------------------------------------------------------------------------------------------------
 
 #### Sponsor this project <3
-[Buy Us a Cup of Coffee](https://www.buymeacoffee.com/smallbluedev)
-![coffee](https://img.shields.io/badge/%E2%98%95-%244.00%20Raised-yellow)
+[Support Us](https://www.patreon.com/smallblue)
+
 
 ---------------------------------------------------------------------------------------------------------------------------
 
@@ -105,11 +105,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## <a name="v3"></a>Expected in Version 3.0.0 (The BIG Update)
 
-- server stats
-- welcome card with captcha *(moved to v4)*
-- [x] music functionality
+- server stats (Requires a database moved to v4)
+- [X] welcome card
+- [x] music functionality also checkout the stand alone music bot (https://github.com/Small-Blue-Development/Blue-Haired-MusicBot)
 - reaction roles *(moved to v4)*
-- support ticket
+- [x] support ticket (few bugs found will be fixed in v4)
 - captcha verification *(moved to v4)*
 - [x] dice rolls
 - [x] upvote / downvote reactions to specific messages
@@ -120,15 +120,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Allow for changing of prefix
 - Allow for custom log channel
 - Leveling (user levels)/ member rank
-- Economy
-- youtube/twitch notifications
-- automatic timed updates and reminders
-- blacklist words
-- self contained configuration
-- block links(with role specific capabilities)
-- message delete/change log
-- role specific functionality
-- leveling
+- Economy/Leveling
+- Server stats
+- Youtube/twitch notifications
+- Automatic timed updates and reminders
+- Blacklist words
+- Self contained configuration
+- Block links(with role specific capabilities)
+- Message delete/change log
+- Role specific functionality
+- captcha verification
+
+
+--  Fixes that are needed  --
+- Support tickets
+- Mute 
 
 ---------------------------------------------------------------------------------------------------------------------------
 
@@ -137,6 +143,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - music bot loop function only loops current song, not entire queue
 
 - kick command does not work on bots
+
+- mute command currently broken looking for a fix to come in v4
 
 ---------------------------------------------------------------------------------------------------------------------------
 
