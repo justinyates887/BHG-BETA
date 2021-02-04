@@ -1,33 +1,19 @@
-const bhconfig = require("../core/bhconfig.json");
+const Discord = require("discord.js"); 
 const fs = require("fs");
-const Discord = require("discord.js");
+const bhconfig = require("../core/bhconfig.json"); 
 
 module.exports = {
     name: 'vote',
-    description: 'adds vote reactions to messages',
+    description: 'This is a vote command for top.gg',
 
-    execute(client, msg, args, logs, blueLogs){
-        msg.delete().then(() => {
-            const { guild, channel } = msg;
-
-            channel.messages.fetch({ limit: 1 }).then((messages) => {
-                msg = messages.first();
-
-                if(!msg) {
-                    if (bhconfig.embeds === true) {
-                        let embed = new Discord.MessageEmbed()
-                            .setAuthor("Oops")
-                            .setColor("#486dAA")
-                            .setDescription("There isn't a message to vote on")
-                            .setFooter(bhconfig.footer)
-                        return msg.channel.send(embed);
-                    }
-                }
-
-                msg.react('👍');
-                msg.react('👎');
-                msg.react('❓');
-            })
-        })
+    execute(client, msg, args){
+        if(bhconfig.embeds === true){
+            let embed = new Discord.MessageEmbed() //sets send card message
+                .setAuthor("Help") // Header of card
+                .setColor("#486dAA") //Side bar color
+                .setDescription(`- Vote for our bot on top.gg : https://top.gg/bot/794674548875460649 `) //main text body
+                .setFooter("Blue Haired Girl By SmallBlue Dev") //footer/watermark
+            msg.channel.send(embed);
+        }
     }
 }
