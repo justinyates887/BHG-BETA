@@ -1,6 +1,7 @@
 const Discord = require('discord.js')       //initialize discord library adn API's
 const client = new Discord.Client()   
 const { Player } = require('discord-player'); //create instance of discord client
+const market = require('steam-market-search').market;  
 
 const config = require("./config/bot.js")
 const bhconfig = require("./commands/core/bhconfig.json")
@@ -66,6 +67,11 @@ client.once('ready', async () => {
     //logs to console bot online
     console.log(`Logged in as ${client.user.tag} (${client.user.id}) on ${servers} servers`);
 
+    setInterval(() => {
+        dbl.postStats(client.guilds.size);
+        //sets game activity
+        client.user.setActivity(`${config.prefix}help | ${servers} servers!`);
+    }, 180000);
     
 });
 
