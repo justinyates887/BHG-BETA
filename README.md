@@ -7,9 +7,9 @@
 
 **The purpose of this bot is to provide an all-encompasing administrative bot for discord servers to reduce bot clutter.**
 
-> *Current version 2.1.0*
+> *Current version 3.1.0*
 
-> *Current beta 2.7*
+> *Current beta 3.2.0*
 
 ---------------------------------------------------------------------------------------------------------------------------
 
@@ -45,11 +45,11 @@ Justin Yates & Azrael
 
 > - [License](#license)
 
-> - [v1.0.0 (previous)](#v1)
+> - [v1.0.0 (depreciated)](#v1)
 
-> - [v2.0.0 (stable)](#v2)
+> - [v2.0.0 (depreciated)](#v2)
 
-> - [v3.0.0](#v3)
+> - [v3.0.0 (stable)](#v3)
 
 > - [v4.0.0](#v4)
 
@@ -103,7 +103,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ---------------------------------------------------------------------------------------------------------------------------
 
-## <a name="v3"></a>Expected in Version 3.0.0 (The BIG Update)
+## <a name="v3"></a>Current in Version 3.0.0 (The BIG Update)
 
 - server stats (Requires a database moved to v4)
 - [X] welcome card
@@ -113,6 +113,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - captcha verification *(moved to v4)*
 - [x] dice rolls
 - [x] upvote / downvote reactions to specific messages
+- [x] steam market pricing and listings on popular steam games (csgo, rust, dota 2, and tf2)
 
 ---------------------------------------------------------------------------------------------------------------------------
 
