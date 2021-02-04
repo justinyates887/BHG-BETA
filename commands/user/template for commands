@@ -15,7 +15,7 @@ const Discord = require("discord.js");
     name: '',
     description: '',
 
-    execute(msg, args){
+    execute(client, msg, args, logs, blueLogs){
 
     }
 }
