@@ -18,6 +18,10 @@ module.exports = {
                 - **${bhconfig.prefix}reddit** sends a meme from a specified subreddit [<command> + <subreddit>]\n\
                 - **${bhconfig.prefix}roll** rolls a specified dice [ex. ${bhconfig.prefix}roll 2d20+4]\n\
                 - **${bhconfig.prefix}vote** adds reactions to previous message with upvotes, downvotes, and question reactions.\n\
+                - **${bhconfig.prefix}csgo** will initiate a csgo steam market search for items you specify (just use the command, the bot will ask you what you want to search.)\n\
+                - **${bhconfig.prefix}rust** will initiate a rust steam market search for items you specify (just use the command, the bot will ask you what you want to search.)\n\
+                - **${bhconfig.prefix}dota** will initiate a dota steam market search for items you specify (just use the command, the bot will ask you what you want to search.)\n\
+                - **${bhconfig.prefix}tf2** will initiate a tf2 steam market search for items you specify (just use the command, the bot will ask you what you want to search.)\n\
                 - **${bhconfig.prefix}invitebot** sends an invite link for this bot\n\
                 - **${bhconfig.prefix}donate** sends you links to help support this bot and keep it free! :)`)
                 .setFooter(bhconfig.footer) //footer/watermark
