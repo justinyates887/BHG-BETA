@@ -1,7 +1,33 @@
-module.exports = (client, msg) => {
+/**NOTE: THIS FUNCTION STORES THE DATA UNDER USER ID, NOT GUILD. NEED TO CHANGE TO GUILD SPECIFIC */
+
+const mongo = require('../mongo');
+const msgCountSchema = require('../commands/setup/schemas/msg-count-schema');
+
+module.exports = async (client, msg) => {
     if (msg.author.bot || msg.channel.type === 'dm') return;
 
-    const prefix = client.config.discord.prefix;
+    const { author } = msg;
+    const { id } = author;
+
+    await mongo().then(async mongoose => {
+        try{
+            await msgCountSchema.findByIdAndUpdate({
+                _id: id
+            }, 
+            {
+                $inc: {
+                    'msgCount': 1
+                }, 
+            },
+            {
+                upsert: true
+            }).exec()
+        } finally{
+            mongoose.connection.close();
+        }
+    })
+
+    const prefix = guildPrefixes[guild.id] || client.config.discord.prefix;
 
     if (msg.content.indexOf(prefix) !== 0) return;
 

@@ -2,7 +2,7 @@ const Discord = require('discord.js')       //initialize discord library adn API
 const client = new Discord.Client()   
 const { Player } = require('discord-player'); //create instance of discord client
 const market = require('steam-market-search').market;  
-
+const mongo = require('./mongo');
 const config = require("./config/bot.js")
 const bhconfig = require("./commands/core/bhconfig.json")
 
@@ -73,6 +73,14 @@ client.once('ready', async () => {
         client.user.setActivity(`${config.prefix}help | ${servers} servers!`);
     }, 180000);
     
+    //await mongo connection
+    await mongo().then(mongoose => {
+        try{
+            console.log('Connected to Mongo!')
+        } finally {
+            mongoose.connection.close();
+        }
+    })
 });
 
     //*****************************************This is where version update goes when new version/features/bug fixes are added**********************************************
@@ -122,7 +130,7 @@ client.on("guildCreate", guild => {
                         command !addlogschannel. This will create a channel called #blue-logs where all of our logs will be sent. If there is no such \
                         channel no logs will be sent.\n\nThe !mute command requires the role @MUTED\n\nTo see a full list of commands use !help\n\n\
                         To follow production visit us at https://github.com/justinyates887/blue-haired-girl-bot \n\nTo report a bug please friend \
-                        @erodias#9576,@Mr.Floyd 🇨🇦#0420 or join the Official Discord Channel: https://discord.gg/tb4mZWtXC8") //main text body
+                        @Protest#9576,@Mr.Floyd 🇨🇦#0420 or join the Official Discord Channel: https://discord.gg/tb4mZWtXC8") //main text body
                         .setFooter(config.footer)
                          channel.send(embed);
                 }
@@ -151,5 +159,6 @@ if(logs === true){
         client.channels.cache.find('blue-log').send(`**${member.username}** has just left server...`);
     })
 }
+
 //adds token so bot will initalize from .env
 client.login(client.config.discord.token);
