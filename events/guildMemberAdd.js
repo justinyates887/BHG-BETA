@@ -19,8 +19,8 @@ const onJoin = async member => {
         await mongo().then(async (mongoose) => {
             try{
                 const result = await welcomeSchema.findOne({ _id: guild.id })
-
-                cache[guild.id] = data = [result.channelId, result.text]
+                if(result && !result === null)
+                {cache[guild.id] = data = [result.channelId, result.text]}
             } finally{
                 mongoose.connection.close();
             }

@@ -7,10 +7,12 @@ const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5NDY3NDU0OD
 const { isInvite } = require('../commands/admin/antiad');
 const antiAdSchema = require('../commands/setup/schemas/anti-ad-schema');
 const { addXP } = require('../features/levels');
+const commandBase = require('../config/command-base')
 
 
 module.exports = async (client, msg) => {
     if (msg.author.bot || msg.channel.type === 'dm') return;
+    commandBase.loadPrefixes(client)
 
     await mongo().then(async mongoose => {
         try{
