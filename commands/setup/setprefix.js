@@ -27,9 +27,9 @@ module.exports = {
                         upsert: true
                     })
 
-                    msg.reply(`The prefix for this server is now ${args[0]}`)
-            }finally{
-                mongoose.connection.close();
+                    return msg.reply(`The prefix for this server is now ${args[0]}`)
+            } catch (err){
+                return console.error(`Eror at setprefix.js(32): ${err}`)
             }
         })
     }

@@ -32,8 +32,8 @@ module.exports = {
                 }, {
                    upsert: true 
                 })
-            } finally{
-                mongoose.connection.close();
+            } catch (err){
+                console.error(`Error at db welcome.js(36)`)
             }
         })
     }

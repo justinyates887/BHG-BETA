@@ -120,9 +120,7 @@ const loadPrefixes = async (client) => {
                     }
                 }
             } catch (err) {
-                console.log(err)
-            } finally {
-                mongoose.connection.close();
+                console.error(`Error at command-base.js(123): ${err}`)
             }
         })
 }
