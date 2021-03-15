@@ -10,5 +10,6 @@
     "userMuted": "{user} Has been Muted by {staffMember} for '{reason}'",
     "userKicked": "{user} Has been Kicked by {staffMember} for '{reason}'",
     "permissionRole": "Developers",
-    "adminRole": "795324636685664296"
+    "adminRole": "795324636685664296",
+    "mongoPath": "mongodb://localhost:27017/blueHairedGirl"
   }

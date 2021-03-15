@@ -69,4 +69,3 @@ module.exports = {
         }
     }
 }
-//needs to be able to nuke channels with perms

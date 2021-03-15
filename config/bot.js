@@ -1,3 +1,7 @@
+const guildPrefixes = {}
+const mongo = require('../mongo');
+const commandPrefixSchema = require('../commands/setup/schemas/command-prefix-schema')
+
 module.exports = {
     emojis: {
         off: ':x:',
@@ -6,11 +10,6 @@ module.exports = {
         music: ':musical_note:',
         success: ':white_check_mark:',
     },
-  
-    discord: {
-        token: 'Nzk3ODg5NzE2ODE2MTgzMzE2.X_tCtA.ud0BNgZKpPaRI_Qd54ftSQ9RIVc',
-        prefix: 'bt!',
-        //activity: 'ACTIVITY',
-    },
+    
     filters: ['8D', 'gate', 'haas', 'phaser', 'treble', 'tremolo', 'vibrato', 'reverse', 'karaoke', 'flanger', 'mcompand', 'pulsator', 'subboost', 'bassboost', 'vaporwave', 'nightcore', 'normalizer', 'surrounding'],
   };
