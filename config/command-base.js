@@ -114,8 +114,10 @@ const loadPrefixes = async (client) => {
             try{
                 for(const guild of client.guilds.cache){
                     const result = await commandPrefixSchema.findOne({ _id: guild[1].id})
-                    guildPrefixes[guild[1].id] = result.prefix;
                     console.log(result)
+                    if(result){
+                        guildPrefixes[guild[1].id] = result.prefix;
+                    }
                 }
             } catch (err) {
                 console.log(err)
