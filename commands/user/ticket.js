@@ -34,26 +34,23 @@ module.exports = {
     name: 'ticket',
     description: 'creates a cupport ticket in private channel',
 
-    execute(userMessage, client, msg, args, logs, blueLogs){
-        const {guild, member} = userMessage;
+    execute(client, msg, args, logs, blueLogs){
+        const rand = Math.floor((Math.random() * 1000) + 1)
+        userMessage = args.join(' ');
 
-        let channelID =  userMessage.guild.channels.cache.find(c => c.name === ('open-tickets'));
+        msg.guild.channels.create(`ticket-${rand}`, {
+            type: 'text',
+            permissionOverwrites: [
+                {
+                    id: msg.guild.id,
+                    allow: ['VIEW_CHANNEL'],
+                }]
+            })
+
+        let channelID =  msg.guild.channels.cache.find(c => c.name === (`ticket-${rand}`));
+        console.log(channelID)
         let channelSend = channelID.id;
         const channel = guild.channels.cache.get(channelSend)
-
-        if(!channelID){
-            userMessage.guild.channels.create('open-tickets', {
-                type: 'text',
-                permissionOverwrites: [
-                    {
-                        id: userMessage.guild.id,
-                        allow: ['VIEW_CHANNEL'],
-                    }]
-                })
-
-                channelID =  userMessage.guild.channels.cache.find(c => c.name === ('open-tickets'));
-                channelSend = channelID.id;
-        }
 
         registerEvent(client, channelSend);
         let message = args.join(' ');

@@ -1,6 +1,3 @@
-const bhconfig = require("../core/bhconfig.json");
-const fs = require("fs");
-const Discord = require("discord.js");
 const mongo = require('../../mongo');
 const commandPrefixSchema = require('./schemas/command-prefix-schema')
 
@@ -35,6 +32,5 @@ module.exports = {
                 mongoose.connection.close();
             }
         })
-
     }
 }

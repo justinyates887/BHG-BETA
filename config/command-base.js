@@ -1,4 +1,7 @@
-const { prefix } = require('./core/bhconfig.json');
+const { prefix: globalPrefix } = require('../commands/core/bhconfig.json');
+const guildPrefixes = {};
+const mongo = require('../mongo')
+const commandPrefixSchema = require('../commands/setup/schemas/command-prefix-schema')
 
 const validatePermissions = (permissions) => {
     const validPermissions = [      //  Value           Description                                   Channel Type
@@ -40,35 +43,89 @@ const validatePermissions = (permissions) => {
             throw new Error(`Unknown permission node in !commands-base! perms array: ${permission}`)
         }
     }
-
-    if(permissions.length) {
-        if(typeof permission === 'string'){
-            permissions = [permissions];
-        }
-
-        validatePermissions(permissions);
-    }
 }
 
-module.export = (client, commandOptions) => {
-     let {
-         name,
-         commands,
-         expectedArgs = '',
-         permissionsError = '',
-         minArgs = 0,
-         maxArgs = null,
-         permissions = [],
-         requiredRoles = [],
-         execute
-     } = commandOptions
+const loadCommands = (client) => {
+    //  let {
+    //      name,
+    //      description,
+    //      expectedArgs = '',
+    //      permissionsError = 'You do not have permission to run this command',
+    //      minArgs = 0,
+    //      maxArgs = null,
+    //      permissions = [],
+    //      requiredRoles = [],
+    //      execute
+    //  } = commandOptions;
 
-     if (typeof commands === 'string') {
-         commands = [commands];
-     }
+    //  //Ensure name and aliases are in array
+    //  if (typeof command.name === 'string') {
+    //      command.name = [command.name.toLowerCase()];
+    //  }
 
+    //  console.log(`Registering command ${name[0]}`)
+
+    //  //Ensure perms are in array and are valid
+    //  if(permissions.length){
+    //      if(typeof permissions === 'string'){
+    //          permissions === [permissions]
+    //      }
+    //       validatePermissions(permissions)
+    //  }
+
+     client.on('message', msg => {
+         const { member, content, guild } = msg
+         const prefix = guildPrefixes[guild.id] || globalPrefix;
+         if(content.toLowerCase().startsWith(`${prefix}`)){
+            //  for (const permission of permissions){
+            //      if(!member.hadPermission(permission)){
+            //          return msg.reply(permissionsError);
+            //      }
+            //  }
+            //  for(const requiredRole of requiredRoles){
+            //      const role = guild.roles.cache.find(role => {
+            //          role.name === requiredRole
+            //      })
+
+            //      if(!role || member.roles.cache.has(role.id)){
+            //          return msg.reply(`You must have the ${role} to use this command.`)
+            //      }
+            //  }
+            //  if(args.length < minArgs || (
+            //      maxArgs !== null && args.length > maxArgs
+            //  )) {
+            //      return msg.reply(`Incorrect syntax, use : ${prefix}${expectedArgs}`)
+            //  }
+            // command.execute(client, msg, args)
+            const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+            const command = args.shift().toLowerCase();
+            console.log(command, args)
+
+            const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
+
+            if (cmd) cmd.execute(client, msg, args);
+         }
+     })
 }
 
-const isAugerABitch = () => {
-    return true;
+const loadPrefixes = async (client) => {
+    await mongo()
+        .then(async mongoose => {
+            try{
+                for(const guild of client.guilds.cache){
+                    const result = await commandPrefixSchema.findOne({ _id: guild[1].id})
+                    guildPrefixes[guild[1].id] = result.prefix;
+                    console.log(result)
+                }
+            } catch (err) {
+                console.log(err)
+            } finally {
+                mongoose.connection.close();
+            }
+        })
 }
+
+module.exports.loadPrefixes = loadPrefixes;
+module.exports.loadCommands = loadCommands;
+module.exports.guildPrefixes = guildPrefixes;
+module.exports.validatePermissions = validatePermissions;

@@ -6,6 +6,10 @@ const msgCountSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    gID: {
+        type: Number,
+        required: true
+    },
     msgCount: {
         type: Number,
         required: true
