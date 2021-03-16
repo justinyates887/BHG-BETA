@@ -8,15 +8,15 @@ module.exports = (client) => {
 }
 
 module.exports.addCoins = async (guildID, uID, coins) => {
-    return await mongo()
+     await mongo()
     .then(async (mongoose) => {
         try{
             const result = await profileSchema.findOneAndUpdate({
-                _id: guildID,
-                uID
+                _id: uID,
+                gID: guildID
             }, {
-                _id,
-                uID,
+                _id: uID,
+                gID: guildID,
                 $inc: {
                     coins
                 }
@@ -26,10 +26,10 @@ module.exports.addCoins = async (guildID, uID, coins) => {
             })
 
             coinsCache[`${guildID}-${uID}`] = result.coins
-
-            return result.coins
+            const cr = result.coins
+            return cr
         } catch (err){
-            console.error(`Error in db economy.js(32): ${err}`)
+            return console.error(`Error in db economy.js(32): ${err}`)
         }
     })
 }
@@ -44,8 +44,8 @@ module.exports.getCoins = async (guildID, uID) => {
     .then(async mongoose => {
         try{
             const result = await profileSchema.findOne({
-                _id,
-                uID
+                _id: uID,
+                gID: guildID
             })
 
             let coins = 0;
@@ -53,15 +53,15 @@ module.exports.getCoins = async (guildID, uID) => {
                 coins = result.coins
             } else {
                 await new profileSchema({
-                    _id: guildID,
-                    uID,
+                    _id: uID,
+                    gID: guildID,
                     coins,
                     xp,
                     level
                 }).save()
             }
 
-            coinscache[`${guildID}-${uID}`] = coins
+            coinsCache[`${guildID}-${uID}`] = coins
 
             return coins
         } catch (err){

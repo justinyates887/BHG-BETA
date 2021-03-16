@@ -12,7 +12,7 @@ module.exports = {
 
         const balance = await economy.getCoins(guildID, uID)
 
-        msg.channel.send(`<@${targetID}> has a balance of ${balance}`)
+        msg.channel.send(`<@${targetID}> has a balance of ${balance} coins`)
 
     }
 }
