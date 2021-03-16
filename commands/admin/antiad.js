@@ -37,8 +37,8 @@ module.exports = {
                             })
         
                             msg.reply(`The antiad is now ON`)
-                    } finally{
-                        mongoose.connection.close();
+                    } catch (err){
+                        console.error(`Error in db antiad.js(41): ${err}`)
                     }
             })
             } else if(msg.content.toLowerCase() === 'off'){
@@ -57,8 +57,8 @@ module.exports = {
                             })
         
                             msg.reply(`The anti-ads are now OFF`)
-                    } finally{
-                        mongoose.connection.close();
+                    } catch (err){
+                        console.error(`Error at db antiad.js(61): ${err}`)
                     }
                 })
             } else {

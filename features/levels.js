@@ -61,8 +61,8 @@ const addXP = async (guildID, uID, xpToAdd, msg) => {
                 }).save()
             }
 
-        } finally {
-            mongoose.connection.close()
+        } catch (err){
+            console.error(`Error at levels.js(feature)(65): ${err}`)
         }
     })
 }

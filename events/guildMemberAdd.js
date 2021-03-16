@@ -21,8 +21,8 @@ const onJoin = async member => {
                 const result = await welcomeSchema.findOne({ _id: guild.id })
                 if(result && !result === null)
                 {cache[guild.id] = data = [result.channelId, result.text]}
-            } finally{
-                mongoose.connection.close();
+            } catch (err){
+                console.error(`Error at guildMemberAdd.js(event)(25): ${err}`)
             }
         })
     }

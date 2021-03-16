@@ -1,30 +1,31 @@
 const mongo = require('../mongo');
+require('dotenv').config();
 const commandBase = require('../config/command-base');
-const Discord = require('discord.js')       //initialize discord library adn API's
+const Discord = require('discord.js')
 const client = new Discord.Client()
-const DBL = require("dblapi.js");
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5NDY3NDU0ODg3NTQ2MDY0OSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjExMTY0MDM5fQ._xTPzCfejiQuftOibOgMgw1gjXap0-2qZHWkAG4iVhA', client);
+const AutoPoster = require('topgg-autoposter');
+const ap = AutoPoster(process.env.DBL, client)
 
 
 module.exports = async (client) => {
     console.log(`Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`);
 
-    client.user.setActivity(`${client.guilds.cache.size} servers | ${client.users.cache.size} users`, {type: 'WATCHING'});
-
     setInterval(() => {
-        dbl.postStats(client.guilds.size);
-        //sets game activity
-        client.user.setActivity(`${config.prefix}help | ${servers} servers!`);
+        client.user.setActivity(`${client.guilds.cache.size} servers | ${client.users.cache.size} users`, {type: 'WATCHING'});
     }, 180000);
     
     //await mongo connection
     await mongo().then(mongoose => {
         try{
-            console.log('Connected to Mongo!')
-        } finally {
-            mongoose.connection.close();
+            console.log('Client and database ready')
+        } catch(err) {
+            console.error('Error connecting at ready.js: 24:' + err);
         }
     })
+
+    ap.on('posted', () => {
+        console.log('Posted stats to Top.gg!')
+      })
 
     commandBase.loadPrefixes(client)
 };

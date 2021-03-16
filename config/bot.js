@@ -1,7 +1,3 @@
-const guildPrefixes = {}
-const mongo = require('../mongo');
-const commandPrefixSchema = require('../commands/setup/schemas/command-prefix-schema')
-
 module.exports = {
     emojis: {
         off: ':x:',

@@ -11,7 +11,7 @@ const addToCache = (guildID, message, emoji, roleID) => {
     if(emoji && roleID){
         array[a][emoji] = roleID
     }
-    cache[guildID] = array
+    return cache[guildID] = array
 }
 const handleReaction = (reaction, user, adding) => {
     const { msg } = reaction
@@ -30,9 +30,9 @@ const handleReaction = (reaction, user, adding) => {
                 if(role){
                     const member = guild.members.cache.get(user.id);
                     if(adding){
-                        member.roles.add(role)
+                        return member.roles.add(role)
                     } else {
-                        member.roles.remove(role)
+                        return member.roles.remove(role)
                     }
                 }
                 return
@@ -68,14 +68,14 @@ module.exports = {
             try{
                 const cacheMessage = true;
                 const skipCache = true;
-                const fetchMessage = await channel.messages.fetch(messageID, cacheMessage, skipCache);
+                const fetchedMessage = await channel.messages.fetch(messageID, cacheMessage, skipCache);
 
                 if(fetchedMessage){
-                    cache[guildID] = [fetchedMessage, roles]
+                    return cache[guildID] = [fetchedMessage, roles]
                 }
             } catch(err){
                 console.log(`Removing messageID ${messageID} from the db`);
-                await messageSchema.deleteOne({ messageID });
+                return await messageSchema.deleteOne({ messageID });
             }
         }
 

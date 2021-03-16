@@ -29,9 +29,7 @@ module.exports.addCoins = async (guildID, uID, coins) => {
 
             return result.coins
         } catch (err){
-            console.log(err)
-        } finally{
-            mongoose.connection.close()
+            console.error(`Error in db economy.js(32): ${err}`)
         }
     })
 }
@@ -66,8 +64,8 @@ module.exports.getCoins = async (guildID, uID) => {
             coinscache[`${guildID}-${uID}`] = coins
 
             return coins
-        } finally {
-            mongoose.connection.close();
+        } catch (err){
+            console.error(`Error in db economy.js(68): ${err}`)
         }
     })
 }
