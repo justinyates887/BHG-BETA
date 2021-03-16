@@ -15,6 +15,11 @@ module.exports = {
             return msg.channel.send('missing permissions')
         }
 
+        if(msg.channel.mentions.first()){
+            channel = msg.channel.mentions.first();
+        }
+
+        let burn = args.shift(msg.channel.mentions.first())
         let text = args.join(' ');
 
         if(!text){

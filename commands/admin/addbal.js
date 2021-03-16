@@ -24,7 +24,8 @@ module.exports = {
         const uID = mention.id
 
         const newCoins = await economy.addCoins(guildID, uID, coins)
+        const whyWontThisWorkCoins = await economy.getCoins(guildID, uID)
 
-        msg.reply(`You have given <@${uID}> ${coins} coin(s). They now have a balance of ${newCoins}.`);
+        msg.reply(`You have given <@${uID}> ${coins} coin(s). They now have a balance of ${whyWontThisWorkCoins}.`);
     }
 }

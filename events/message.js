@@ -1,7 +1,5 @@
 const mongo = require('../mongo');
-const Discord = require('discord.js')    
-const client = new Discord.Client()   
-const msgCountSchema = require('../commands/setup/schemas/msg-count-schema');
+const Discord = require('discord.js')
 const { isInvite } = require('../commands/admin/antiad');
 const antiAdSchema = require('../commands/setup/schemas/anti-ad-schema');
 const { addXP } = require('../features/levels');
@@ -10,28 +8,6 @@ const commandBase = require('../config/command-base')
 
 module.exports = async (client, msg) => {
     if (msg.author.bot || msg.channel.type === 'dm') return;
-    
-    commandBase.loadPrefixes(client)
-
-    await mongo().then(async mongoose => {
-        try{
-            await msgCountSchema.findOneAndUpdate(
-            {
-                _id: msg.author.id
-            },
-            {
-               gID: msg.guild.id,
-                $inc: {
-                    'msgCount': 1
-                }, 
-            },
-            {
-                upsert: true
-            }).exec()
-        } catch(err){
-            return console.error(`Error at db message.js(event)(31): ${err}`);
-        }
-    })
 
     //checks blue haired server for voters on top.gg
     // if(msg.guild.id === '795324515034726410'){

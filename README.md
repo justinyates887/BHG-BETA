@@ -118,23 +118,25 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ---------------------------------------------------------------------------------------------------------------------------
 
 ## <a name="v4"></a>Expected in version 4.0.0 (The customization/databse update)
-- Allow for changing of prefix
+- [x] Allow for changing of prefix
 - Allow for custom log channel
-- Leveling (user levels)/ member rank
-- Economy/Leveling
+- [x] Leveling (user levels)/ member rank
+- [x] Economy/Coins
 - Server stats
 - Youtube/twitch notifications
 - Automatic timed updates and reminders
 - Blacklist words
 - Self contained configuration
-- Block links(with role specific capabilities)
+- [x] Block links(with role specific capabilities)
 - Message delete/change log
 - Role specific functionality
 - captcha verification
 
 
 --  Fixes that are needed  --
+
 - Support tickets
+
 - Mute 
 
 ---------------------------------------------------------------------------------------------------------------------------

@@ -1,28 +1,30 @@
-const bhconfig = require("../core/bhconfig.json"); //initialize bhconfig.json
-const fs = require("fs");
+const bhconfig = require("../core/bhconfig.json");
 const Discord = require("discord.js");
+const warnSchema = require('../setup/schemas/warn-schema')
+const mongo = require('../../mongo')
 
 module.exports = {
     name: 'warn',
     description: 'sends a warning to user',
 
-    execute(client, msg, args, logs, blueLogs){
+    async execute(client, msg, args, logs, blueLogs){
+
         if (!msg.member.hasPermission('ADMINISTRATOR')) {
             return msg.channel.send('missing permissions')
         }
 
         const target = msg.mentions.users.first();
-        let burn = args.shift();
-        let warnReason = args.join(' ');
-
+        const burn = args.shift();
+        const warnReason = args.join(' ');
+        const guildID = msg.guild.id
+        const uID = target.id
         if (!warnReason) {
             // Sets the Var reason to this:
             warnReason = "No reason provided";
         }
 
         if (!target) {
-            if (bhconfig.embeds === true) { //Checks if the embed option is true
-                // Creates and sends this embed
+            if (bhconfig.embeds === true) { 
                 let embed = new Discord.MessageEmbed()
                     .setAuthor("Error!")
                     .setColor("#486dAA")
@@ -33,36 +35,51 @@ module.exports = {
         }
 
         if (target === msg.author.id){  // checks to see if the target is the msg author 
-            if (bhconfig.embeds === true) { //Checks if the embed option is true
-                // Creates and sends this embed
+            if (bhconfig.embeds === true) {
                 let embed = new Discord.MessageEmbed()
                     .setAuthor("Error!")
                     .setColor("#486dAA")
-                    .setDescription("You cannot ban yourself")
+                    .setDescription("Why would you warn yourself? O.o")
                     .setFooter(bhconfig.footer)
                 return msg.channel.send(embed);
             }
         }
 
+        const warning = {
+            author: msg.member.user.tag,
+            timestamp: new Date().getTime(),
+            warnReason
+        }
+
+        await mongo()
+            .then(async mongoose => {
+                try{
+                    await warnSchema.findOneAndUpdate({
+                      _id: uID,
+                      gID: guildID  
+                    }, {
+                        _id: uID,
+                        gID: guildID,
+                        $push: {
+                            warnings: warning
+                        }
+                    }, {
+                        upsert: true
+                    })
+                } catch (err){
+                    console.error(`Error at db warn.js(60): ${err}`)
+                }
+            })
+
         if (target && warnReason){
-            if (bhconfig.embeds === true) { //Checks if the embed option is true
-                // Creates and sends this embed
+            if (bhconfig.embeds === true) {
                 let embed = new Discord.MessageEmbed()
-                    .setAuthor("Did you just assume my gender?")
+                    .setAuthor("Warning")
                     .setColor("#486dAA")
                     .setDescription(`${target} you have been warned: ${warnReason}`)
                     .setFooter(bhconfig.footer)
                 msg.channel.send(embed);
             }
         }
-
-        if (logs === true) {
-            let embed = new Discord.MessageEmbed() //sets send card message
-                .setAuthor("Action | Role Removed") // Header of card
-                .setColor("#486dAA") //Side bar color
-                .setDescription(`${target} now has been warned for ${warnReason} by ${msg.author}.`) //main text body
-                .setFooter(bhconfig.footer) //footer/watermark
-            blueLogs.send(embed);
-        }    
     }
 }

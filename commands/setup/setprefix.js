@@ -1,5 +1,6 @@
 const mongo = require('../../mongo');
 const commandPrefixSchema = require('./schemas/command-prefix-schema')
+const commandBase = require('../../config/command-base')
 
 module.exports = {
     name: 'setprefix',
@@ -22,7 +23,7 @@ module.exports = {
                     {
                         _id: guildId,
                         prefix: args[0]
-                    },
+                    }, 
                     {
                         upsert: true
                     })
@@ -31,6 +32,10 @@ module.exports = {
             } catch (err){
                 return console.error(`Eror at setprefix.js(32): ${err}`)
             }
+        }).then(() => {
+            return commandBase.loadPrefixes(client)
+        }).catch(err => {
+            return console.error(`Error in loading prefixes (setprefixes.js)(35): ${err}`)
         })
     }
 }

@@ -7,25 +7,35 @@ module.exports = (client) => {
 
 }
 
-const getNeededXP = (level) => {level * level * 10}
+const getNeededXP = (level) => {return level * level * 10}
 
 const addXP = async (guildID, uID, xpToAdd, msg) => {
     await mongo()
     .then(async mongoose => {
         try{
             const result = await profileSchema.findOneAndUpdate({
-                _id: guildID,
-                uID
+                _id: uID,
+                gID: guildID
             }, {
-                _id: guildID,
-                uID,
+                _id: uID,
+                gID: guildID,
                 $inc: {
                     xp: xpToAdd
-                }
+                },
             }, {
                upsert: true,
                 new: true
             })
+
+            if(!result){
+                const result =  new profileSchema({
+                    _id: uID,
+                    gID: guildID,
+                    coins,
+                    xp: 1,
+                    level
+                })
+            }
 
             if(result){
                 let { xp, level } = result
@@ -39,13 +49,13 @@ const addXP = async (guildID, uID, xpToAdd, msg) => {
                         let embed = new Discord.MessageEmbed()
                             .setAuthor("Congrats!")
                             .setColor("#486dAA")
-                            .setDescription(`Congrats ${msg.user}, you are now level ${level}!`)
+                            .setDescription(`Congrats <@${uID}>, you are now level ${level}!`)
                             .setFooter(bhconfig.footer)
                         msg.channel.send(embed);
                     }
                         await profileSchema.updateOne({
-                           _id: guildID,
-                           uID 
+                           _id: uID,
+                           gID: guildID 
                         }, {
                             xp,
                             level
@@ -53,8 +63,8 @@ const addXP = async (guildID, uID, xpToAdd, msg) => {
                 }
             } else {
                 await new profileSchema({
-                    _id: guildID,
-                    uID,
+                    _id: uID,
+                    gID: guildID,
                     coins,
                     xp,
                     level
