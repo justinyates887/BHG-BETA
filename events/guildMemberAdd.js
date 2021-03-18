@@ -5,11 +5,20 @@ const { updateChannels } = require('../commands/setup/serverstats')
 const { checkLogs } = require('../commands/setup/setlogschannel')
 
 module.exports = async (client, member) => {
-    const logs = checkLogs(member.guild.id)
-    console.log(logs)
+    const logs = await checkLogs(member.guild.id)
     if(logs.desired === true){
-        const channel = member.guild.channels.cache.find(channel => channel.id === logs.cID)
-        channel.send(`Member <@${member.id}> just joined`);
+        const target = member.guild.channels.cache.find(channel => channel.id === logs.cID)
+        if (bhconfig.embeds === true) {
+            let embed = new Discord.MessageEmbed()
+                .setAuthor("✅ Member Joined")
+                .setColor("#008000")
+                .setDescription(`Member <@${member.id}> joined at ${new Date().toLocaleDateString}`)
+                .setFooter(bhconfig.footer)
+             target.send(embed);
+        }
+        else {
+            target.send(`Member <#${member.id}> joined at ${new Date().toLocaleDateString}`);
+        }
     }
 
     onJoin(member);

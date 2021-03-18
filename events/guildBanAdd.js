@@ -1,22 +1,21 @@
-//channelDelete event
 const { checkLogs } = require('../commands/setup/setlogschannel')
 const bhconfig = require('../commands/core/bhconfig.json')
 const Discord = require('discord.js')
 
-module.exports = async (client, channel) => {
+module.exports = async (client, user) => {
     const logs = await checkLogs(channel.guild.id)
     if(logs.desired === true){
-        const target = channel.guild.channels.cache.find(channel => channel.id === logs.cID)
+        const target = user.guild.channels.cache.find(channel => channel.id === logs.cID)
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()
-                .setAuthor("❌ Channel Deletion")
+                .setAuthor("❌ User Banned")
                 .setColor("#FF0000")
-                .setDescription(`Channel **<#${channel.name}>** was just deleted`)
+                .setDescription(`User **${user.name}** has been banned`)
                 .setFooter(bhconfig.footer)
              target.send(embed);
         }
         else {
-            target.send(`Channel <#${channel.id}> was just deleted`);
+            target.send(`User **${user.name}** has been banned`);
         }
     }
 }
