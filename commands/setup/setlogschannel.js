@@ -29,14 +29,13 @@ module.exports = {
 }
 
 module.exports.checkLogs = async (guildID) => {
-    await mongo()
+    return await mongo()
     .then(async mongoose => {
         const result = await logsSchema.findOne({ _id: guildID });
 
-        if(result.desired === true){
-            return result;
-        } else {
+        if(!result.desired === true){
             return
         }
+        return result
     })
 }
