@@ -44,14 +44,7 @@ module.exports = {
                     msg.channel.send(embed);
                 }
 
-                if (logs === true) {
-                    let embed = new Discord.MessageEmbed()
-                        .setAuthor("Action | Giveaway Ended") 
-                        .setColor("#486dAA")
-                        .setDescription(`${winner} won the giveaway!\n\nGiveaway ended by ${msg.author}.`)
-                        .setFooter(bhconfig.footer)
-                    blueLogs.send(embed);
-                } 
+                
             })
         })
     }
