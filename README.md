@@ -133,21 +133,29 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - captcha verification
 
 
---  Fixes that are needed  --
-
-- Support tickets
-
-- Mute 
-
 ---------------------------------------------------------------------------------------------------------------------------
 
 ### <a name="current-issues"></a>Current Issues
 
 - music bot loop function only loops current song, not entire queue
 
+- mute command currently broken looking for a fix to come in v4
+
+
+
+--  Fixes that are in progress  --
+
+- Support tickets
+
+- Mute 
+
+- Server stats need private channel perms on creation
+
+- Admin roles need to be configured under all admin commands
+
 - kick command does not work on bots
 
-- mute command currently broken looking for a fix to come in v4
+- reaction roles & welcome message needs revisiting
 
 ---------------------------------------------------------------------------------------------------------------------------
 
