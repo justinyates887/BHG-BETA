@@ -122,14 +122,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Allow for custom log channel
 - [x] Leveling (user levels)/ member rank
 - [x] Economy/Coins
-- Server stats
+- [x] Server stats
 - Youtube/twitch notifications
 - Automatic timed updates and reminders
-- Blacklist words
+- [x] Blacklist words
 - Self contained configuration
 - [x] Block links(with role specific capabilities)
 - Message delete/change log
-- Role specific functionality
+- [x] Role specific functionality
 - captcha verification
 
 

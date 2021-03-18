@@ -23,8 +23,8 @@ module.exports.expire = (callback) => {
     const expired = () => {
         const sub = redis.createClient({ url: process.env.REDIS})
         sub.subscribe('__keyevent@0__:expired', () => {
-            sub.on('msg', (channel, msg) => {
-                callback(msg)
+            sub.on('message', (channel, message) => {
+                callback(message)
             })
         })
     }
