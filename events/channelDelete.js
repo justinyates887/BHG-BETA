@@ -1,0 +1,1 @@
+//channelDelete event
