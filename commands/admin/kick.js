@@ -7,20 +7,20 @@ module.exports = {
     description: "This kick\'s player!",
 
     execute(client, msg, args, logs, blueLogs){
-        const bot = "794674548875460649"//bot uID
+        const botMe = "794674548875460649"
         var kickReason; 
-        const target = msg.mentions.users.first(); // The user that we are trying to kick
+        const target = msg.mentions.users.first();
         
         if(msg.member.roles.cache.has(bhconfig.adminRole)){
             // Allows only members with the admin role to kick players
-                   kickReason = args.slice(1).join(" "); // Reason of the ban (Everything behind the mention)
-               if (!target) { // Does this if the target did not tag a member
-                   if (bhconfig.embeds === true) { //Checks if the embed option is true then creates and sends this embed 
-                       let embed = new Discord.MessageEmbed() //sets send card message
-                           .setAuthor("Error!") // Header of card
-                           .setColor("#486dAA") //Side bar color
-                           .setDescription("No target found please @ the target your trying to kick") //main text body
-                           .setFooter(bhconfig.footer) //footer/watermark
+                   kickReason = args.slice(1).join(" ");
+               if (!target) {
+                   if (bhconfig.embeds === true) {
+                       let embed = new Discord.MessageEmbed()
+                           .setAuthor("Error!")
+                           .setColor("#486dAA")
+                           .setDescription("No target found please @ the target your trying to kick")
+                           .setFooter(bhconfig.footer)
                        return msg.channel.send(embed);
                }
            }
@@ -28,10 +28,8 @@ module.exports = {
             // Sets the Var reason to this:
             kickReason = "No reason provided";
         }
-        if (target.id === bot) {
-            //Checks if the embed option is true
+        if (target.id === botMe) {
             if (bhconfig.embeds === true) {
-                 // Creates and sends this embed
                  let embed = new Discord.MessageEmbed()
                     .setAuthor("Ouch!")
                     .setColor("#486dAA")
@@ -39,13 +37,11 @@ module.exports = {
                     .setFooter(bhconfig.footer)
                     return msg.channel.send(embed)
             } else {
-                //Sends this if the embed option is false
                 return msg.channel.send("Ouch!");
             }
         }
-        if (target.id === msg.author.id){  // checks to see if the target is the msg author 
-            if (bhconfig.embeds === true) { //Checks if the embed option is true
-                // Creates and sends this embed
+        if (target.id === msg.author.id){ 
+            if (bhconfig.embeds === true) {
                 let embed = new Discord.MessageEmbed()
                     .setAuthor("Error!")
                     .setColor("#486dAA")
@@ -53,7 +49,6 @@ module.exports = {
                     .setFooter(bhconfig.footer)
                 return msg.channel.send(embed);
             } else {
-                //Sends this if the embed option is false
                 return msg.channel.send("You cannot kick yourself.");
             }
         }
