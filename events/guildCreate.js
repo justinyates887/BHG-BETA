@@ -1,4 +1,7 @@
-module.exports = async (client) => {
+const Discord = require('discord.js')       //initialize discord library adn API's
+const client = new Discord.Client()   
+
+module.exports = async (client, guild) => {
 
     let found = 0;
     guild.channels.cache.map((channel) => {
@@ -11,12 +14,10 @@ module.exports = async (client) => {
                         .setAuthor("Hello!")
                         .setColor("#486dAA") 
                         .setDescription("Thank you for inviting me!\n\n\
-                         We are still in production and have no database yet, so customization is limited. \
-                        There are a few things you need to have for some functions to work properly.\n\n\
                         To see a full list of commands use !help\n\n\
                         To follow production visit us at https://github.com/justinyates887/blue-haired-girl-bot \n\n\
-                        To report a bug please friend \
-                        @Protest#9576, @Mr.Floyd 🇨🇦#0420 or join the Official Discord Channel: https://discord.gg/tb4mZWtXC8") //main text body
+                        To report a bug please message \
+                        @Protest#9576, @Mr.Floyd 🇨🇦#0420 or join the Official Discord Channel: https://discord.gg/tb4mZWtXC8")
                         .setFooter(config.footer)
                          channel.send(embed);
                 }
