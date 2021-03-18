@@ -2,9 +2,15 @@ const cache = {}
 const redis = require('../redis');
 const { getRoles } = require('../commands/setup/getRoles')
 const { updateChannels } = require('../commands/setup/serverstats')
+const { checkLogs } = require('../commands/setup/setlogschannel')
 
 module.exports = async (client, member) => {
-    console.log('member joined');
+    const logs = checkLogs(member.guild.id)
+    console.log(logs)
+    if(logs.desired === true){
+        const channel = member.guild.channels.cache.find(channel => channel.id === logs.cID)
+        channel.send(`Member <@${member.id}> just joined`);
+    }
 
     onJoin(member);
     checkMute(member);

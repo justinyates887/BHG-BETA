@@ -80,21 +80,33 @@ module.exports.updateChannels = async (guildID, guild) => {
                     return channel.id === `${result.users[0]}`;
                 });
                 membersChannel.setName(`Members: ${guild.members.cache.filter(member => !member.user.bot).size}`)
+                membersChannel.permissionOverwrites.update({
+                    CONNECT: false
+                })
 
                 const rolesChannel = guild.channels.cache.find((channel) => {
                     return channel.id === `${result.roles[0]}`;
                 });
                 rolesChannel.setName(`Roles: ${guild.roles.cache.size}`)
+                rolesChannel.permissionOverwrites.update({
+                    CONNECT: false
+                })
 
                 const channelsChannel = guild.channels.cache.find((channel) => {
                     return channel.id === `${result.channels[0]}`;
                 });
                 channelsChannel.setName(`Channels: ${guild.channels.cache.size}`)
+                channelsChannel.permissionOverwrites.update({
+                    CONNECT: false
+                })
 
                 const botsChannel = guild.channels.cache.find((channel) => {
                     return channel.id === `${result.bots[0]}`;
                 });
                 botsChannel.setName(`Bots: ${guild.members.cache.filter(member => member.user.bot).size}`)
+                botsChannel.permissionOverwrites.update({
+                    CONNECT: false
+                })
 
                 await serverStatsSchema.findOneAndUpdate({
                     _id: guildID
