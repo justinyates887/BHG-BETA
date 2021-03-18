@@ -1,18 +1,18 @@
 const cache = {}
 const redis = require('../redis');
 const { getRoles } = require('../commands/setup/getRoles')
+const { updateChannels } = require('../commands/setup/serverstats')
 
 module.exports = async (client, member) => {
     console.log('member joined');
 
     onJoin(member);
     checkMute(member);
+    updateChannels(member.guild.id, member.guild);
 }
 
 const onJoin = async member => {
     const { guild } = member
-
-    cache[guild.id] = [channel.id, text];
 
     let data = cache[guild.id]
 
@@ -28,6 +28,8 @@ const onJoin = async member => {
                 console.error(`Error at guildMemberAdd.js(event)(25): ${err}`)
             }
         })
+
+        cache[guild.id] = [channel.id, text];
     }
 
     const channelId = data[0];

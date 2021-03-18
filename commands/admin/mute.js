@@ -17,7 +17,7 @@ module.exports = {
         args.shift();
         const duration = Number(args.join('')) * 60
         const guildID = msg.guild.id
-        const result = getRoles(guildID)
+        const result = await getRoles(guildID)
         const muteRole = result.mute
         const muteFind = msg.guild.roles.cache.find(role => role.id === muteRole)
 
@@ -38,9 +38,9 @@ module.exports = {
             return msg.reply('Please specify a number = the amount of minutes you would like to mute.')
         }
 
-        redis.expire(msg => {
-            if(msg.startsWith('muted-')){
-                const split = msg.split('-');
+        redis.expire(message => {
+            if(message.startsWith('muted-')){
+                const split = message.split('-');
                 const findGuild = split[2]
                 const findMember = split[1]
                 const guild = client.guilds.cache.get(findGuild)
@@ -56,22 +56,23 @@ module.exports = {
             }
         })
 
-        const targetMember = guild.member.cache.get(target.id)
+        const targetID = target.id
+        const why = msg.guild.members.cache.find(member => member.id === targetID)
 
         const redisClient = await redis();
         try{
             const redisKey = `muted-${target.id}-${guildID}`
             if(duration > 0){
                 redisClient.set(redisKey, 'true', 'EX', duration);
-                 targetMember.roles.add(muteFind)
+                 why.roles.add(muteFind)
             } else {
                 redisClient.set(redisKey, 'true')
-                 targetMember.roles.add(muteFind)
+                 why.roles.add(muteFind)
             }
 
-           return msg.channel.send(`<@${target.id}> muted for ${duration}`)
+           return msg.channel.send(`<@${target.id}> muted for ${duration / 60} minutes`)
         } catch(err) {
-            console.error(`Error in mute.js(39): ${err}`)
+            console.error(`Error in mute.js(72): ${err}`)
         }
 
 

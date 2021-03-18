@@ -1,13 +1,15 @@
 const mongo = require('../mongo');
-const Discord = require('discord.js')
 const { isInvite } = require('../commands/admin/antiad');
 const antiAdSchema = require('../commands/setup/schemas/anti-ad-schema');
+const { checkBlacklist } = require('../commands/setup/blacklist')
 const { addXP } = require('../features/levels');
 const commandBase = require('../config/command-base')
 
 
 module.exports = async (client, msg) => {
     if (msg.author.bot || msg.channel.type === 'dm') return;
+    
+    checkBlacklist(msg.guild.id, client, msg)
 
     //checks blue haired server for voters on top.gg
     // if(msg.guild.id === '795324515034726410'){
