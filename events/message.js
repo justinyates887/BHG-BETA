@@ -14,7 +14,7 @@ module.exports = async (client, msg) => {
     // if(msg.guild.id === '795324515034726410'){
     //     let user = msg.author.id;
     //     let role = msg.guild.roles.cache.find((role) => {
-    //         return role.id == '801158747070136330';
+    //         return role.id == '801158747070136330'; 
     //     })
     //     const member = msg.guild.members.cache.find((member) => {
     //         return member.id === msg.author.id;
