@@ -147,15 +147,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 - Server stats need private channel perms on creation
 
-- kick command does not work on bots
-
 - reaction roles & welcome message needs revisiting
 
 ---------------------------------------------------------------------------------------------------------------------------
 
 ### <a name="solved-issues"></a>Solved Issues
-
-- not a bug in our program, but a user bug:
 
 - prefix is widely used, and until it can be altered by users should be changed to something more specific like b! or bh!
 
@@ -170,5 +166,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Admin roles need to be configured under all admin commands
 
 - mute command currently broken looking for a fix to come in v4
+
+- kick command does not work on bots
 
 ![logo](./BlueHairedGirl.png)
