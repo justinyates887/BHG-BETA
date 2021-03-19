@@ -5,17 +5,24 @@ const Discord = require('discord.js')
 module.exports = async (client, role) => {
     const logs = await checkLogs(role.guild.id)
     if(logs.desired === true){
-        const target = role.guild.channels.cache.find(channel => channel.id === logs.cID)
+        const targetLogs = role.guild.channels.cache.find(channel => channel.id === logs.cID)
+
+        const fetchedLogs = await role.guild.fetchAuditLogs({
+            limit: 1,
+            type: 'ROLE_UPDATE',
+        })
+        const discordLog = fetchedLogs.entries.first();
+
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("📝 Role Update")
                 .setColor("#FFDF00")
-                .setDescription(`Role <@${role.id}> was just updated`)
+                .setDescription(`Role <@${role.id}> was just updated by <@${discordLog.executor.id}>.`)
                 .setFooter(bhconfig.footer)
-             return target.send(embed);
+             return targetLogs.send(embed);
         }
         else {
-            return target.send(`Role <@${role.id}> was just updated`);
+            return targetLogs.send(`Role <@${role.id}> was just updated by <@${discordLog.executor.id}>`);
         }
     }
 }

@@ -7,17 +7,22 @@ module.exports = async (client, emoji) => {
     if(logs.desired === true){
         const target = emoji.guild.channels.cache.find(channel => channel.id === logs.cID)
         const newEmoji = emoji.guild.emojis.cache.find(e => e.id === emoji.id)
+        const fetchedLogs = await emoji.guild.fetchAuditLogs({
+            limit: 1,
+            type: 'EMOJI_UPDATE',
+        })
+        const discordLog = fetchedLogs.entries.first();
         console.log(newEmoji)
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()
                 .setAuthor(`📝 Emoji Updated`)
                 .setColor("#FFDF00")
-                .setDescription(`Server emoji **${newEmoji.name}** updated`)
+                .setDescription(`Server emoji **${newEmoji.name}** updated by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
              target.send(embed);
         }
         else {
-            target.send(`Server emoji **${newEmoji.name}** updated`);
+            target.send(`Server emoji **${newEmoji.name}** updated by <@${discordLog.executor.id}>`);
         }
     }
 }

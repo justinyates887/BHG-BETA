@@ -7,16 +7,21 @@ module.exports = async (client, channel) => {
     const logs = await checkLogs(channel.guild.id)
     if(logs.desired === true){
         const target = channel.guild.channels.cache.find(channel => channel.id === logs.cID)
+        const fetchedLogs = await channel.guild.fetchAuditLogs({
+            limit: 1,
+            type: 'CHANNEL_DELETE',
+        })
+        const discordLog = fetchedLogs.entries.first();
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("✅ Channel Created")
                 .setColor("#008000")
-                .setDescription(`Channel <#${channel.id}> was just created`)
+                .setDescription(`Channel <#${channel.id}> was just created by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
              target.send(embed);
         }
         else {
-            target.send(`Channel <#${channel.id}> was just created`);
+            target.send(`Channel <#${channel.id}> was just created by <@${discordLog.executor.id}>`);
         }
     }
 }
