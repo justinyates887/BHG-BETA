@@ -12,7 +12,7 @@ const welcomeSchema = require('../commands/setup/schemas/welcome-schema')
 module.exports = async (client, guild) => {
     const guildID = guild.id
 
-    deleteData(guildID)
+    deleteAllData(guildID)
 }
 
 //this function will 

@@ -3,6 +3,9 @@ const bhconfig = require('../commands/core/bhconfig.json')
 const Discord = require('discord.js')
 
 module.exports = async (client, message) => {
+    if(message.member.user.bot){
+        return
+    }
     const logs = await checkLogs(message.guild.id)
     if(logs.desired === true){
         const target = message.guild.channels.cache.find(channel => channel.id === logs.cID)
@@ -12,13 +15,13 @@ module.exports = async (client, message) => {
                 .setAuthor("📝 Message Edited")
                 .setColor("#FF0000")
                 .setDescription(`User <@${message.author.id}> edited their message.\n\
-                                    Old message: *${message.content}*\n\n\
-                                    New Message: 8${newMessage.content}`)
+                                    **Old message:** *${message.content}*\n\n\
+                                    **New Message:** 8${newMessage.content}`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id}>`);
+            return target.send(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id}>`);
         }
     }
 }

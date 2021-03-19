@@ -119,16 +119,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## <a name="v4"></a>Expected in version 4.0.0 (The customization/databse update)
 - [x] Allow for changing of prefix
-- Allow for custom log channel
+- [x] Allow for custom log channel
 - [x] Leveling (user levels)/ member rank
 - [x] Economy/Coins
 - [x] Server stats
 - Youtube/twitch notifications
 - Automatic timed updates and reminders
 - [x] Blacklist words
-- Self contained configuration
+- [x] Self contained configuration
 - [x] Block links(with role specific capabilities)
-- Message delete/change log
+- [x] Message delete/change log
 - [x] Role specific functionality
 - captcha verification
 
