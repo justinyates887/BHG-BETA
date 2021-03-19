@@ -8,7 +8,7 @@ module.exports = {
     name: 'ban',
     description: "This ban\'s player!",
 
-    async execute(client, msg, args, logs, blueLogs) {
+    async execute(client, msg, args) {
         const target = msg.mentions.users.first()  // The target that we are trying to ban
         var banReason; // Reason of the ban
         const bot = "794674548875460649"//bot uID
@@ -26,6 +26,7 @@ module.exports = {
                 return msg.channel.send(embed);
         }
     }
+    
     if (!banReason) {
         // Sets the Var reason to this:
         banReason = "No reason provided";

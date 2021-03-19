@@ -1,14 +1,31 @@
 const bhconfig = require("../core/bhconfig.json"); //initialize bhconfig.json
-const fs = require("fs");
 const Discord = require("discord.js");
+const { checkLogs } = require('../setup/setlogschannel')
+const { getRoles } = require('../setup/getRoles')
 
 module.exports = {
     name: 'startgiveaway',
     description: 'starts a giveaway with a reaction role',
 
-    async execute(client, msg, args, logs, blueLogs){
-        if (!msg.member.hasPermission('ADMINISTRATOR')) {
-            return msg.channel.send('missing permissions')
+    async execute(client, msg, args){
+        const admin = await getRoles(msg.guild.id)
+        const checkRoles = function(admin){
+            if(admin && admin.admin){
+                let result;
+                for(let i = 0; i < admin.admin.length; i++){
+                    const role =  msg.member.guild.roles.cache.find(r => r.id === admin.admin[i])
+                    if(admin.admin[i] === role.id){
+                        result = true
+                    } else {
+                        result = false
+                    }
+                }
+                return result
+            }
+        }
+
+        if(!msg.member.hasPermission('ADMINISTRATOR') && checkRoles(admin) === false){
+            return msg.channel.send('Missing permissions');
         }
 
         args = args.toString();
@@ -23,10 +40,10 @@ module.exports = {
                 return msg.channel.send(embed);
             }
         } else if (args){
-            msg.delete().then(() => {
+            msg.delete().then(async () => {
                 const { guild, channel } = msg;
 
-                channel.messages.fetch({ limit: 1 }).then((messages) => {
+                channel.messages.fetch({ limit: 1 }).then(async (messages) => {
                     msg = messages.first();
 
                     if(!msg) {
@@ -44,22 +61,29 @@ module.exports = {
                     if(args.includes(':')) {
                         const split = args.split(':');
                         const emojiName = split[1];
+                        console.log(emojiName)
 
-                        args = guild.emojis.chache.find((emoji) => {
-                            return emoji.name === emojiName;
-                        })
+                        args = guild.emojis.cache.find((emoji) => {emoji.name === emojiName})
+                        console.log(args.id)
                     }
 
                     msg.react(args);
 
-                    if (logs === true) {
-                        let embed = new Discord.MessageEmbed()
-                            .setAuthor("Action | Giveaway Started") 
-                            .setColor("#486dAA")
-                            .setDescription(`A giveaway was started by ${msg.author} in channel ${msg.channel}`)
-                            .setFooter(bhconfig.footer)
-                        blueLogs.send(embed);
-                    } 
+                    const logs = await checkLogs(msg.user.guild.id)
+                    if(logs.desired === true){
+                        const target = msg.user.guild.channels.cache.find(channel => channel.id === logs.cID)
+                        if (bhconfig.embeds === true) {
+                            let embed = new Discord.MessageEmbed()
+                                .setAuthor("📝 Giveaway Started!")
+                                .setColor("#FFDF00")
+                                .setDescription(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+                                .setFooter(bhconfig.footer)
+                            target.send(embed);
+                        }
+                        else {
+                            target.send(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+                    }
+                  }
                 })
             })
         }

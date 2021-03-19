@@ -2,15 +2,32 @@ const bhconfig = require("../core/bhconfig.json");
 const Discord = require("discord.js");
 const warnSchema = require('../setup/schemas/warn-schema')
 const mongo = require('../../mongo')
+const { getRoles } = require('../setup/getRoles')
 
 module.exports = {
     name: 'warn',
     description: 'sends a warning to user',
 
-    async execute(client, msg, args, logs, blueLogs){
+    async execute(client, msg, args){
 
-        if (!msg.member.hasPermission('ADMINISTRATOR')) {
-            return msg.channel.send('missing permissions')
+        const admin = await getRoles(msg.guild.id)
+        const checkRoles = function(admin){
+            if(admin && admin.admin){
+                let result;
+                for(let i = 0; i < admin.admin.length; i++){
+                    const role =  msg.member.guild.roles.cache.find(r => r.id === admin.admin[i])
+                    if(admin.admin[i] === role.id){
+                        result = true
+                    } else {
+                        result = false
+                    }
+                }
+                return result
+            }
+        }
+
+        if(!msg.member.hasPermission('ADMINISTRATOR') && checkRoles(admin) === false){
+            return msg.channel.send('Missing permissions');
         }
 
         const target = msg.mentions.users.first();
@@ -67,7 +84,7 @@ module.exports = {
                         upsert: true
                     })
                 } catch (err){
-                    console.error(`Error at db warn.js(60): ${err}`)
+                    return console.error(`Error at db warn.js(60): ${err}`)
                 }
             })
 
@@ -81,5 +98,23 @@ module.exports = {
                 msg.channel.send(embed);
             }
         }
+
+        const logs = await checkLogs(msg.user.guild.id)
+        if(logs.desired === true){
+            const target = msg.user.guild.channels.cache.find(channel => channel.id === logs.cID)
+            if (bhconfig.embeds === true) {
+                let embed = new Discord.MessageEmbed()
+                    .setAuthor("📝 Giveaway Started!")
+                    .setColor("#FFDF00")
+                    .setDescription(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+                    .setFooter(bhconfig.footer)
+                target.send(embed);
+            }
+            else {
+                target.send(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+        }
+      }
+
+
     }
 }
