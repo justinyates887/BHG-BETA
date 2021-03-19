@@ -139,10 +139,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 - music bot loop function only loops current song, not entire queue
 
-- mute command currently broken looking for a fix to come in v4
-
-
-
 --  Fixes that are in progress  --
 
 - Support tickets
@@ -151,19 +147,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 - Server stats need private channel perms on creation
 
-- Admin roles need to be configured under all admin commands
-
-- kick command does not work on bots
-
 - reaction roles & welcome message needs revisiting
 
 ---------------------------------------------------------------------------------------------------------------------------
 
 ### <a name="solved-issues"></a>Solved Issues
 
-- not a bug in our program, but a user bug:
-
-> prefix is widely used, and until it can be altered by users should be changed to something more specific like b! or bh!
+- prefix is widely used, and until it can be altered by users should be changed to something more specific like b! or bh!
 
 - certain logs do not indicate targets (such as the nuke command)
 
@@ -172,5 +162,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - need to fix announce command to include channels that people specify with # as well as other commands that function off of @roles and #channels
 
 - most logs do not specify what user invoked the command
+
+- Admin roles need to be configured under all admin commands
+
+- mute command currently broken looking for a fix to come in v4
+
+- kick command does not work on bots
 
 ![logo](./BlueHairedGirl.png)
