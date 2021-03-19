@@ -45,7 +45,7 @@ module.exports = {
             }
         })
 
-        msg.reply(`Logs channel set to ${target}`)
+        return msg.reply(`Logs channel set to ${target}`)
     }
 }
 
