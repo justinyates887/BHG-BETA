@@ -15,10 +15,10 @@ module.exports = async (client, member) => {
                 .setColor("#FF0000")
                 .setDescription(`Member **${member.name}** left at ${new Date().toLocaleDateString}`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Member **${member.name}** left at ${new Date().toLocaleDateString}`);
+            return target.send(`Member **${member.name}** left at ${new Date().toLocaleDateString}`);
         }
     }
 }

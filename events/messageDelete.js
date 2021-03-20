@@ -17,10 +17,10 @@ module.exports = async (client, message) => {
                 .setColor("#FF0000")
                 .setDescription(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id} by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id}> by <@${discordLog.executor.id}>`);
+            return target.send(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id}> by <@${discordLog.executor.id}>`);
         }
     }
 }

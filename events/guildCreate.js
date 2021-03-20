@@ -21,7 +21,7 @@ module.exports = async (client, guild) => {
                         .setFooter(config.footer)
                          channel.send(embed);
                 }
-                found = 1;
+                return found = 1;
               }
             }
           }

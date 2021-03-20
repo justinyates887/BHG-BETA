@@ -1,14 +1,12 @@
-const bhconfig = require("../core/bhconfig.json");
-const Discord = require("discord.js");
 const messageSchema = require('../setup/schemas/message');
-const { addToCache } = require('../../features/rr')
 const { getRoles } = require('../setup/getRoles')
+const { addToCache } = require('../../features/rr')
 
 module.exports = {
     name: 'rrmsg',
     description: 'Sets a message for your reaction roles',
 
-    async execute(client, msg, args, logs, blueLogs){
+    async execute(client, msg, args){
 
         const admin = await getRoles(msg.guild.id)
         const checkRoles = function(admin){
@@ -61,7 +59,8 @@ module.exports = {
             channelID: targetChannel.id,
             messageID: newMessage.id,
         }).save()
-            .catch(() => {
+            .catch((err) => {
+                console.error(`Error at rrmsg.js(65): ${err}`)
                 msg.reply('Failed to save to database, please report this bug :(')
                     .then((message) => {
                         message.delete({

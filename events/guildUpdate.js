@@ -17,10 +17,10 @@ module.exports = async (client, guild) => {
                 .setColor("#FFDF00")
                 .setDescription(`Guild has been updated by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Guild has been updated by <@${discordLog.executor.id}>`);
+            return target.send(`Guild has been updated by <@${discordLog.executor.id}>`);
         }
     }
 }

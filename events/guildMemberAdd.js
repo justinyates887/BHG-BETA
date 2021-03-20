@@ -24,6 +24,7 @@ module.exports = async (client, member) => {
     onJoin(member);
     checkMute(member);
     updateChannels(member.guild.id, member.guild);
+    return 
 }
 
 const onJoin = async member => {
@@ -71,6 +72,6 @@ const checkMute = async member => {
             }
         })
     } catch(err){
-        console.error(`Error at guildMemberAdd(44): ${err}`)
+        return console.error(`Error at guildMemberAdd(44): ${err}`)
     }
 }

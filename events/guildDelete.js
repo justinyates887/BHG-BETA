@@ -17,7 +17,7 @@ module.exports = async (client, guild) => {
 
 //this function will 
 module.exports.deleteAllData = async (guildID) => {
-    await mongo()
+    return await mongo()
     .then(async mongoose => {
         try{
             await antiAdSchema.findOneAndDelete({ _id: guildID })

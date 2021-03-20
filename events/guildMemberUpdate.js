@@ -17,10 +17,10 @@ module.exports = async (client, member) => {
                 .setColor("#FFDF00")
                 .setDescription(`User **${member.name}** has had their settings updated by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`User **${member.name}** has had their settings updated by <@${discordLog.executor.id}>`);
+            return target.send(`User **${member.name}** has had their settings updated by <@${discordLog.executor.id}>`);
         }
     }
 }

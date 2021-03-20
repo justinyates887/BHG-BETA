@@ -81,7 +81,7 @@ module.exports = {
             return channel.name === `Roles: ${guildRoles}`;
         });
 
-        await mongo()
+        return await mongo()
         .then(async mongoose => {
             try{
                 await serverStatsSchema.findOneAndUpdate({

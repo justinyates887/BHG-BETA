@@ -8,7 +8,7 @@ module.exports = {
     name: 'welcome',
     description: 'sets welcome custom welcome message for servers',
 
-    async execute(client, msg, args, logs, blueLogs){
+    async execute(client, msg, args){
         const { member, channel, content, guild } = msg
 
         const admin = await getRoles(msg.guild.id)

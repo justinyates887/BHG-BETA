@@ -18,10 +18,10 @@ module.exports = async (client, channel) => {
                 .setColor("#FF0000")
                 .setDescription(`Channel **<#${channel.name}>** was just deleted by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Channel <#${channel.id}> was just deleted by <@${discordLog.executor.id}>`);
+            return target.send(`Channel <#${channel.id}> was just deleted by <@${discordLog.executor.id}>`);
         }
     }
 }

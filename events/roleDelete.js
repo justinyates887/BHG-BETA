@@ -17,10 +17,10 @@ module.exports = async (client, role) => {
                 .setColor("#FF0000")
                 .setDescription(`Role **${role.name}** was just deleted by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Role **${role.name}** was just deleted by <@${discordLog.executor.id}>`);
+            return target.send(`Role **${role.name}** was just deleted by <@${discordLog.executor.id}>`);
         }
     }
 }
