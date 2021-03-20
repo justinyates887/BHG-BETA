@@ -141,10 +141,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 --  Fixes that are in progress  --
 
-- Support tickets
-
-- Mute 
-
 - Server stats need private channel perms on creation
 
 - reaction roles & welcome message needs revisiting
@@ -168,5 +164,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - mute command currently broken looking for a fix to come in v4
 
 - kick command does not work on bots
+
+- Support tickets
+
+- Mute 
 
 ![logo](./BlueHairedGirl.png)

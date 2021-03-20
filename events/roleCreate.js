@@ -6,16 +6,21 @@ module.exports = async (client, role) => {
     const logs = await checkLogs(role.guild.id)
     if(logs.desired === true){
         const target = role.guild.channels.cache.find(channel => channel.id === logs.cID)
+        const fetchedLogs = await role.guild.fetchAuditLogs({
+            limit: 1,
+            type: 'ROLE_UPDATE',
+        })
+        const discordLog = fetchedLogs.entries.first();
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("✅ Role Created")
                 .setColor("#008000")
-                .setDescription(`Role <@${role.id}> was just created`)
+                .setDescription(`Role <@${role.id}> was just created by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
              target.send(embed);
         }
         else {
-            target.send(`Role <#${role.id}> was just created`);
+            target.send(`Role <#${role.id}> was just created by <@${discordLog.executor.id}>`);
         }
     }
 }

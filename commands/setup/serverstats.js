@@ -35,18 +35,34 @@ module.exports = {
 
         await guild.channels.create(`Members: ${guildUsers}`, {
             type: 'voice',
+            permissionOverwrites: [{
+                id: msg.guild.id,
+                deny: ["CONNECT"]
+            }]
             })
 
         await guild.channels.create(`Bots: ${guildBots}`, {
             type: 'voice',
+            permissionOverwrites: [{
+                id: msg.guild.id,
+                deny: ["CONNECT"]
+            }]
             })
 
         await guild.channels.create(`Channels: ${guildChannels}`, {
             type: 'voice',
+            permissionOverwrites: [{
+                id: msg.guild.id,
+                deny: ["CONNECT"]
+            }]
             })
 
         await guild.channels.create(`Roles: ${guildRoles}`, {
             type: 'voice',
+            permissionOverwrites: [{
+                id: msg.guild.id,
+                deny: ["CONNECT"]
+            }]
             })
         
         const membersChannel = guild.channels.cache.find((channel) => {

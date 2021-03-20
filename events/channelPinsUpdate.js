@@ -6,16 +6,24 @@ module.exports = async (client, channel) => {
     const logs = await checkLogs(channel.guild.id)
     if(logs.desired === true){
         const target = channel.guild.channels.cache.find(channel => channel.id === logs.cID)
+        const fetchedLogs = await channel.guild.fetchAuditLogs({
+            limit: 1,
+            type: 'MESSAGE_PIN',
+        }) || await channel.guild.fetchAuditLogs({
+            limit: 1,
+            type: 'MESSAGE_UNPIN',
+        })
+        const discordLog = fetchedLogs.entries.first();
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("📝 Channel Pins Updated")
                 .setColor("#FFDF00")
-                .setDescription(`Pins updated in channel <#${channel.id}>`)
+                .setDescription(`Pins updated in channel <#${channel.id}> by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
              target.send(embed);
         }
         else {
-            target.send(`Pins updated in channel <#${channel.id}>`);
+            target.send(`Pins updated in channel <#${channel.id}> by <@${discordLog.executor.id}>`);
         }
     }
 }

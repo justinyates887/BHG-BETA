@@ -9,14 +9,13 @@ module.exports = async (client, message) => {
     const logs = await checkLogs(message.guild.id)
     if(logs.desired === true){
         const target = message.guild.channels.cache.find(channel => channel.id === logs.cID)
-        const newMessage = message.channel.messages.fetch(m => m.id === message.id)
+
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("📝 Message Edited")
                 .setColor("#FF0000")
-                .setDescription(`User <@${message.author.id}> edited their message.\n\
-                                    **Old message:** *${message.content}*\n\n\
-                                    **New Message:** 8${newMessage.content}`)
+                .setDescription(`User <@${message.author.id}> edited their message in ${message.channel.id}.\n\n\
+                                    **Old message:** *${message.content}*`)
                 .setFooter(bhconfig.footer)
              return target.send(embed);
         }
