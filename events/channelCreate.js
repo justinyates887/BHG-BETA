@@ -18,10 +18,10 @@ module.exports = async (client, channel) => {
                 .setColor("#008000")
                 .setDescription(`Channel <#${channel.id}> was just created by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Channel <#${channel.id}> was just created by <@${discordLog.executor.id}>`);
+            return target.send(`Channel <#${channel.id}> was just created by <@${discordLog.executor.id}>`);
         }
     }
 }

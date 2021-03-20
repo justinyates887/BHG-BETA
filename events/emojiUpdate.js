@@ -19,10 +19,10 @@ module.exports = async (client, emoji) => {
                 .setColor("#FFDF00")
                 .setDescription(`Server emoji **${newEmoji.name}** updated by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Server emoji **${newEmoji.name}** updated by <@${discordLog.executor.id}>`);
+            return target.send(`Server emoji **${newEmoji.name}** updated by <@${discordLog.executor.id}>`);
         }
     }
 }

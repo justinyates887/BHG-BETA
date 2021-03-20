@@ -17,10 +17,10 @@ module.exports = async (client, role) => {
                 .setColor("#008000")
                 .setDescription(`Role <@${role.id}> was just created by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Role <#${role.id}> was just created by <@${discordLog.executor.id}>`);
+            return target.send(`Role <#${role.id}> was just created by <@${discordLog.executor.id}>`);
         }
     }
 }

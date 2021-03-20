@@ -20,10 +20,10 @@ module.exports = async (client, channel) => {
                 .setColor("#FFDF00")
                 .setDescription(`Pins updated in channel <#${channel.id}> by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Pins updated in channel <#${channel.id}> by <@${discordLog.executor.id}>`);
+            return target.send(`Pins updated in channel <#${channel.id}> by <@${discordLog.executor.id}>`);
         }
     }
 }

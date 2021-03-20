@@ -1,8 +1,6 @@
-const fs = require("fs");
-const Discord = require("discord.js");
-const rr = require('../features/rr')
+const { handleReaction } = require('../features/rr')
 
-module.exports = (client, reaction, user) => {
-    rr.handleReaction(reaction, user, true)
+module.exports = async (client, reaction, user) => {
+    return handleReaction(reaction, user, true)
     
 }

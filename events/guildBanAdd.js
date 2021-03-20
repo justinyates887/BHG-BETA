@@ -17,10 +17,10 @@ module.exports = async (client, user) => {
                 .setColor("#FF0000")
                 .setDescription(`User **${user.name}** has been banned by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`User **${user.name}** has been banned by <@${discordLog.executor.id}>`);
+            return target.send(`User **${user.name}** has been banned by <@${discordLog.executor.id}>`);
         }
     }
 }

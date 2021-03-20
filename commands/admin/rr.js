@@ -4,9 +4,9 @@ const messageSchema = require('../setup/schemas/message');
 
 module.exports = {
     name: 'rr',
-    description: '',
+    description: 'adds a reaction role to reaction message',
 
-    async execute(client, msg, args, logs, blueLogs){
+    async execute(client, msg, args){
         const admin = await getRoles(msg.guild.id)
         const checkRoles = function(admin){
             if(admin && admin.admin){
@@ -33,10 +33,15 @@ module.exports = {
            return msg.reply('The bot requires MANAGE_ROLES permission')
         }
 
+        if(!args.length >= 3){
+            return msg.reply(`Please provide a valid number or arguments: <emoji> <role name, tag, or ID> <text to display>`)
+        }
+
         let emoji = args.shift();
         let role = args.shift();
         let displayName = args.join(' ');
 
+        //if tagged role
         if(role.startsWith('<@&')){
             role = role.substring( 3, role.length - 1)
         }
@@ -46,10 +51,10 @@ module.exports = {
         }) || null
 
         if(!newRole){
-            return msg.reply(`Could not find a role for ${role}`)
+            return msg.reply(`Could not find a role for **${role}**`)
         }
 
-        role = newRole
+        role = newRole;
 
         if(emoji.includes(':')){
             const emojiName = emoji.split(':')[1];
@@ -60,11 +65,10 @@ module.exports = {
 
         const [fetchedMessage] = fetchCache(guild.id)
         if(!fetchedMessage){
-            return msg.reply('An error occcured, please try again')
-            console.log(error)
+           return msg.reply('An error occcured, please try again')
         }
 
-        const newLine = `${emoji}: ${displayName}`;
+        const newLine = `${emoji} ${displayName}`;
         let { content } = fetchedMessage;
 
         if(content.includes(emoji)){
@@ -101,6 +105,7 @@ module.exports = {
         {
             upsert: true
         })
-        addToCache(guild.id, fetchedMessage, emoji, role.id);
+        await addToCache(guild.id, fetchedMessage, emoji, role.id)
+        return msg.delete();
     }
 }

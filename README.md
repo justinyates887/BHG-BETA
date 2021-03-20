@@ -108,9 +108,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - server stats (Requires a database moved to v4)
 - [X] welcome card
 - [x] music functionality also checkout the stand alone music bot (https://github.com/Small-Blue-Development/Blue-Haired-MusicBot)
-- reaction roles *(moved to v4)*
 - [x] support ticket (few bugs found will be fixed in v4)
-- captcha verification *(moved to v4)*
 - [x] dice rolls
 - [x] upvote / downvote reactions to specific messages
 - [x] steam market pricing and listings on popular steam games (csgo, rust, dota 2, and tf2)
@@ -124,13 +122,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - [x] Economy/Coins
 - [x] Server stats
 - Youtube/twitch notifications
-- Automatic timed updates and reminders
 - [x] Blacklist words
 - [x] Self contained configuration
 - [x] Block links(with role specific capabilities)
 - [x] Message delete/change log
 - [x] Role specific functionality
-- captcha verification
+- Captcha verification
+- Reaction roles
 
 
 ---------------------------------------------------------------------------------------------------------------------------
@@ -140,8 +138,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - music bot loop function only loops current song, not entire queue
 
 --  Fixes that are in progress  --
-
-- Server stats need private channel perms on creation
 
 - reaction roles & welcome message needs revisiting
 
@@ -168,5 +164,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Support tickets
 
 - Mute 
+
+- Server stats need private channel perms on creation
 
 ![logo](./BlueHairedGirl.png)

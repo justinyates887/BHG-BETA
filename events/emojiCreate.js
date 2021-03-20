@@ -17,10 +17,10 @@ module.exports = async (client, emoji) => {
                 .setColor("#008000")
                 .setDescription(`Server emoji **${emoji.name}** created by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
-             target.send(embed);
+             return target.send(embed);
         }
         else {
-            target.send(`Server emoji **${emoji.name}** created by <@${discordLog.executor.id}>`);
+            return target.send(`Server emoji **${emoji.name}** created by <@${discordLog.executor.id}>`);
         }
     }
 }
