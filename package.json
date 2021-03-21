@@ -19,6 +19,7 @@
   "homepage": "https://github.com/justinyates887/blue-haired-girl-bot#readme",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
+    "@haileybot/captcha-generator": "^1.6.1",
     "@top-gg/sdk": "^3.0.9",
     "canvas": "^2.7.0",
     "dblapi.js": "^2.4.1",

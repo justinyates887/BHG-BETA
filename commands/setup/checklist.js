@@ -6,6 +6,7 @@ const blacklistSchema = require('../setup/schemas/blacklist-schema')
 const commandPrefixSchema = require('../setup/schemas/command-prefix-schema')
 const guildRolesSchema = require('../setup/schemas/guild-roles-schema')
 const logsSchema = require('../setup/schemas/logs-schema')
+const suggestSchema = require('./schemas/suggest-schema')
 const ticketSchema = require('../setup/schemas/ticket-schema')
 const welcomeSchema = require('../setup/schemas/welcome-schema');
 
@@ -19,6 +20,7 @@ module.exports = {
         let prefixResult;
         let guildRolesResult = '';
         let logsResult;
+        let suggestResult;
         let ticketsResult;
         let welcomeResult;
 
@@ -79,6 +81,21 @@ module.exports = {
             }
         })
 
+        await suggest(msg)
+        .then(result => {
+            if(result.cID && result.aCID){
+                suggestResult = `✅ All suggest channel have been configured`
+            } else {
+                suggestResult = `❌ All suggest channels not configured. Please use <prefix>setlogschannel + <channel> if desired. (Required for logs)`
+                if(!result.cID){
+                    suggestResult += `\n> ❌ **Suggestions Channel:** Not configured. Use <prefix>setsuggestchannel + <targetchannel> (required for <prefix>suggest)`
+                }
+                if(!result.aCID){
+                    suggestResult += `\n> ❌ **Approval Channel:** Not configured. Use <prefix>setapprovalchannel + <targetchannel> (required for <prefix>approve)`
+                }
+            }
+        })
+
         await tickets(msg)
         .then(result => {
             if(result.cID){
@@ -105,6 +122,7 @@ module.exports = {
                                 ${blacklistResult}\n\
                                 ${guildRolesResult}\n\
                                 ${logsResult}\n\
+                                ${suggestResult}\n\
                                 ${ticketsResult}\n\
                                 ${welcomeResult}`)
                 .setFooter(bhconfig.footer)
@@ -181,6 +199,20 @@ const logs = async (msg) => {
             return console.error(err)
         }
     })
+}
+
+const suggest = async (msg) => {
+    return await mongo()
+   .then(async mongoose => {
+       try{
+           const result = suggestSchema.findOne({
+               _id: msg.guild.id
+           })
+           return result
+       } catch (err){
+           return console.error(err)
+       }
+   })
 }
 
 const tickets = async (msg) => {

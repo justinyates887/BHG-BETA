@@ -23,4 +23,5 @@ module.exports = async (client, message) => {
             return target.send(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id}> by <@${discordLog.executor.id}>`);
         }
     }
+    return
 }

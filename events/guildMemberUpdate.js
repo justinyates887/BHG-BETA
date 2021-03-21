@@ -23,4 +23,5 @@ module.exports = async (client, member) => {
             return target.send(`User **${member.name}** has had their settings updated by <@${discordLog.executor.id}>`);
         }
     }
+    return
 }

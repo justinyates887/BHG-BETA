@@ -128,7 +128,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - [x] Role specific functionality
 - [x] Custom welcome channel with embed welcome card
 - [x] Advanced suggestions with approval
-- Captcha verification
+- [x] Captcha verification
 - Reaction roles
 
 
@@ -140,7 +140,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 --  Fixes that are in progress  --
 
-- reaction roles & welcome message needs revisiting
+- reaction roles
 
 ---------------------------------------------------------------------------------------------------------------------------
 
@@ -167,5 +167,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Mute 
 
 - Server stats need private channel perms on creation
+
+- welcome message needs revisiting
 
 ![logo](./BlueHairedGirl.png)
