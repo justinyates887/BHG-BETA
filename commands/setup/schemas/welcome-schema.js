@@ -5,11 +5,7 @@ const welcomeSchema = mongoose.Schema({
         type: String, 
         required: true
     },
-    channelId: {
-        type: String,
-        required: true
-    },
-    text: {
+    channelID: {
         type: String,
         required: true
     }

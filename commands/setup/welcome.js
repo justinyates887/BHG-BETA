@@ -1,8 +1,17 @@
-const bhconfig = require("../core/bhconfig.json");
-const Discord = require("discord.js");
 const mongo = require('../../mongo');
 const welcomeSchema = require('./schemas/welcome-schema')
 const { getRoles } = require('./getRoles')
+
+const cache = new Map()
+
+const loadData = async () => {
+    const results = await welcomeSchema.find()
+
+    for(const result of results){
+        cache.set(result._id, result.channelID)
+    }
+}; loadData()
+
 
 module.exports = {
     name: 'welcome',
@@ -31,15 +40,10 @@ module.exports = {
             return msg.channel.send('Missing permissions');
         }
 
-        if(msg.channel.mentions.first()){
-            channel = msg.channel.mentions.first();
-        }
+        const target = msg.mentions.channels.first();
 
-        let burn = args.shift(msg.channel.mentions.first())
-        let text = args.join(' ');
-
-        if(!text){
-            return channel.send('Please provide a welcome message');
+        if(!target){
+            msg.reply(`Please specify a target channel`)
         }
 
         await mongo().then(async (mongoose) => {
@@ -48,14 +52,21 @@ module.exports = {
                      _id: guild.id
                  }, {
                     _id: guild.id,
-                    channelId: channel.id,
-                    text: text
+                    channelID: target.id,
                 }, {
                    upsert: true 
                 })
             } catch (err){
-                console.error(`Error at db welcome.js(36)`)
+                return console.error(`Error at db welcome.js(36)`)
             }
         })
+
+        cache.set(guild.id, target.id)
+
+        return msg.reply(`Welcome channel now set to <#${target.id}>`)
     }
+}
+
+module.exports.getChannelID = (guildID) => {
+    return cache.get(guildID)
 }

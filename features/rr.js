@@ -1,89 +1,109 @@
-const messageSchema = require('../commands/setup/schemas/message');
-const cache = {} // { guildID: [message, {Emoji: RoleID}]}
+const messageSchema = require('../commands/setup/schemas/message')
 
-module.exports = {
-    name: 'rr',
-    description: '',
+const cache = {} // { guildId: [message, { Emoji: RoleID }] }
 
-    async execute(client, msg, args){
-        const results = await messageSchema.find();
+const fetchCache = (guildId) => cache[guildId] || []
 
-        for(const result of results){
-            const { guildID, channelID, messageID, roles } = result;
+const addToCache = async (guildId, message, emoji, roleId) => {
+  const array = cache[guildId] || [message, {}]
 
-            const guild = await client.guilds.cache.get(guildID);
-            if(!guild){
-                console.log(`Removing guildID ${guildID} from db due to bot removal.`);
-                await messageSchema.deleteOne({ guildID });
-                return
-            }
+  if (emoji && roleId) {
+    array[1][emoji] = roleId
+  }
 
-            const channel = await guild.channels.cache.get(channelID);
-            if(!channel){
-                console.log(`Rmeoving channelID ${channelID} from db due to non-existance`);
-                await messageSchema.deleteOne({ channelID })
-                return
-            }
+  await message.channel.messages.fetch(message.id, true, true)
 
-            try{
-                const cacheMessage = true;
-                const skipCache = true;
-                const fetchedMessage = await channel.messages.fetch(messageID, cacheMessage, skipCache);
-
-                if(fetchedMessage){
-                    return cache[guildID] = [fetchedMessage, roles]
-                }
-            } catch(err){
-                console.log(`Removing messageID ${messageID} from the db`);
-                return await messageSchema.deleteOne({ messageID });
-            }
-        }
-
-    }
-}
-
-const fetchCache = (guildID) => cache[guildID] || []
-
-const addToCache = async (guildID, message, emoji, roleID) => {
-    const array = cache[guildID] || [message, {}];
-    if(emoji && roleID){
-        array[1][emoji] = roleID
-    }
-
-    await message.channel.messages.fetch(message.id, true, true)
-
-    return cache[guildID] = array
+  cache[guildId] = array
 }
 
 const handleReaction = (reaction, user, adding) => {
-    const { message } = reaction
-    const { guild } = message
+  const { message } = reaction
+  const { guild } = message
 
-    const [fetchedMessage, roles] = fetchCache(guild.id)
-    if(!fetchedMessage){
-        return console.log(`Error in fetching cache`)
-    }
-    if(fetchedMessage.id === message.id && guild.me.hasPermission('MANAGE_ROLES')){
-        const toCompare = reaction.emoji.id || reaction.emoji.name;
+  const [fetchedMessage, roles] = fetchCache(guild.id)
+  if (!fetchedMessage) {
+    return
+  }
 
-        for(const key of Object.keys(roles)){
-            if(key === toCompare){
-                const role = guild.roles.cache.get(roles[key])
-                if(role){
-                    const member = guild.members.cache.get(user.id);
-                    console.log(member)
-                    if(adding === true){
-                        member.roles.add(role)
-                    } else {
-                        member.roles.remove(role)
-                    }
-                }
-                return console.log(`reaction handled: ${member}`)
-            }
+  if (
+    fetchedMessage.id === message.id &&
+    guild.me.hasPermission('MANAGE_ROLES')
+  ) {
+    const toCompare = reaction.emoji.id || reaction.emoji.name
+
+    for (const key of Object.keys(roles)) {
+      if (key === toCompare) {
+        const role = guild.roles.cache.get(roles[key])
+        if (role) {
+          const member = guild.members.cache.get(user.id)
+
+          if (adding) {
+            member.roles.add(role)
+          } else {
+            member.roles.remove(role)
+          }
         }
+        return
+      }
     }
+  }
 }
 
-module.exports.fetchCache = fetchCache;
-module.exports.addToCache = addToCache;
-module.exports.handleReaction = handleReaction;
+module.exports = async (client) => {
+  client.on('messageReactionAdd', (reaction, user) => {
+    handleReaction(reaction, user, true)
+  })
+
+  client.on('messageReactionRemove', (reaction, user) => {
+    handleReaction(reaction, user, false)
+  })
+
+  const results = await messageSchema.find()
+
+  for (const result of results) {
+    const { guildId, channelId, messageId, roles } = result
+
+    const guild = await client.guilds.cache.get(guildId)
+
+    if (!guild) {
+      console.log(`Removing guild ID "${guildId}" from the database`)
+      await messageSchema.deleteOne({ guildId })
+      return
+    }
+
+    const channel = await guild.channels.cache.get(channelId)
+
+    if (!channel) {
+      console.log(`Removing channel ID "${channelId}" from the database`)
+      await messageSchema.deleteOne({ channelId })
+      return
+    }
+
+    try {
+      const cacheMessage = true
+      const skipCache = true
+      const fetchedMessage = await channel.messages.fetch(
+        messageId,
+        cacheMessage,
+        skipCache
+      )
+
+      if (fetchedMessage) {
+        const newRoles = {}
+
+        for (const role of roles) {
+          const { emoji, roleId } = role
+          newRoles[emoji] = roleId
+        }
+
+        cache[guildId] = [fetchedMessage, newRoles]
+      }
+    } catch (e) {
+      console.log(`Removing message ID "${messageId}" from the database`)
+      await messageSchema.deleteOne({ messageId })
+    }
+  }
+}
+
+module.exports.fetchCache = fetchCache
+module.exports.addToCache = addToCache

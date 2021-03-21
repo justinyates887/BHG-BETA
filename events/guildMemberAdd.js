@@ -1,8 +1,13 @@
-const cache = {}
+const Discord = require('discord.js') 
 const redis = require('../redis');
+const bhconfig = require('../commands/core/bhconfig.json')
 const { getRoles } = require('../commands/setup/getRoles')
 const { updateChannels } = require('../commands/setup/serverstats')
 const { checkLogs } = require('../commands/setup/setlogschannel')
+const Canvas = require('canvas')
+const { MessageAttachment } = require ('discord.js')
+const path = require('path')
+const { getChannelID } = require('../commands/setup/welcome')
 
 module.exports = async (client, member) => {
     const logs = await checkLogs(member.guild.id)
@@ -12,12 +17,12 @@ module.exports = async (client, member) => {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("✅ Member Joined")
                 .setColor("#008000")
-                .setDescription(`Member <@${member.id}> joined at ${new Date().toLocaleDateString}`)
+                .setDescription(`Member <@${member.id}> just joined!`)
                 .setFooter(bhconfig.footer)
              target.send(embed);
         }
         else {
-            target.send(`Member <#${member.id}> joined at ${new Date().toLocaleDateString}`);
+            target.send(`Member <#${member.id}> just joined!`);
         }
     }
 
@@ -29,29 +34,43 @@ module.exports = async (client, member) => {
 
 const onJoin = async member => {
     const { guild } = member
+    const channelID = getChannelID(guild.id)
 
-    let data = cache[guild.id]
-
-    if(!data){
-        console.log('welcomeCMD: FETCHING FROM DATABASE')
-
-        await mongo().then(async (mongoose) => {
-            try{
-                const result = await welcomeSchema.findOne({ _id: guild.id })
-                if(result && !result === null)
-                {cache[guild.id] = data = [result.channelId, result.text]}
-            } catch (err){
-                console.error(`Error at guildMemberAdd.js(event)(25): ${err}`)
-            }
-        })
-
-        cache[guild.id] = [channel.id, text];
+    const channel = guild.channels.cache.get(channelID)
+    if(!channel){
+        return
     }
 
-    const channelId = data[0];
-    const text = data[1];
-    const channel = guild.channels.cache.get(channelId)
-    channel.send(text.replace(/<@>/g, `<@${member.id}>`));
+    const canvas = Canvas.createCanvas(700, 250)
+    const ctx = canvas.getContext('2d')
+    const background = await Canvas.loadImage(
+        path.join(__dirname, '../background.png')
+    )
+    let x = 0
+    let y = 0
+    ctx.drawImage(background, x, y)
+    const pfp = await Canvas.loadImage(
+        member.user.displayAvatarURL({
+            format: 'png'
+        })
+    )
+    x = canvas.width / 2 - pfp.width / 2
+    y = 25
+    ctx.drawImage(pfp, x, y)
+
+    ctx.fillStyle = '#ffffff'
+    ctx.font = '35px sans-serif'
+    let text = `Welcome ${member.user.tag}`
+    x = canvas.width / 2 - ctx.measureText(text).width / 2
+    ctx.fillText(text, x, 60 + pfp.height)
+
+    ctx.font = '30px sans-serif'
+    text = `Member #${guild.memberCount}`
+    x =  canvas.width / 2 - ctx.measureText(text).width / 2
+    ctx.fillText(text, x, 100 + pfp.height)
+
+    const attachment = new MessageAttachment(canvas.toBuffer())
+    channel.send('', attachment)
 }
  
 const checkMute = async member => {

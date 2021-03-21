@@ -105,7 +105,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## <a name="v3"></a>Current in Version 3.0.0 (The BIG Update)
 
-- server stats (Requires a database moved to v4)
 - [X] welcome card
 - [x] music functionality also checkout the stand alone music bot (https://github.com/Small-Blue-Development/Blue-Haired-MusicBot)
 - [x] support ticket (few bugs found will be fixed in v4)
@@ -127,7 +126,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - [x] Block links(with role specific capabilities)
 - [x] Message delete/change log
 - [x] Role specific functionality
-- Captcha verification
+- [x] Custom welcome channel with embed welcome card
+- [x] Advanced suggestions with approval
+- [x] Captcha verification
 - Reaction roles
 
 
@@ -139,7 +140,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 --  Fixes that are in progress  --
 
-- reaction roles & welcome message needs revisiting
+- reaction roles
 
 ---------------------------------------------------------------------------------------------------------------------------
 
@@ -166,5 +167,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Mute 
 
 - Server stats need private channel perms on creation
+
+- welcome message needs revisiting
 
 ![logo](./BlueHairedGirl.png)
