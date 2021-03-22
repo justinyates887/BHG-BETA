@@ -1,46 +1,60 @@
 const bhconfig = require("../core/bhconfig.json");  //initialize bhconfig.json
-const fs = require("fs");
 const Discord = require("discord.js");
+const mongo = require('../../mongo');
+const prefixSchema = require('../setup/schemas/command-prefix-schema')
 
 module.exports = {
     name: 'adminhelp',
     description: 'gives admin help',
 
-    execute(client, msg, args){
+    async execute(client, msg, args){
+        const prefix = await mongo()
+        .then(async mongoose => {
+            try{
+                const result = await prefixSchema.findOne({
+                    _id: msg.guild.id
+                })
+                return result.prefix
+            } catch(err) {
+                return
+            }
+        }) || 'b!'
+
         if(bhconfig.embeds === true){
-            let embed = new Discord.MessageEmbed() //sets send card message
-                .setAuthor("Admin Commands") // Header of card
-                .setColor("#486dAA") //Side bar color
-                .setDescription(`- **${bhconfig.prefix}help** gives list of commands\n\
-                - **${bhconfig.prefix}kick** kicks selected user *[${bhconfig.prefix}<command> + <@user> + <reason (if any)>]*\n\
-                - **${bhconfig.prefix}ban** bans selected user *[${bhconfig.prefix}<command> + <@user> + <reason (if any)>]*\n\
-                - **${bhconfig.prefix}warn** warns selected user *[${bhconfig.prefix}<command> + <@user>]*\n\
-                - **${bhconfig.prefix}purge** purges messages *[${bhconfig.prefix}<command> + <quantity to delete>]*\n\
-                - **${bhconfig.prefix}nuke** deletes the channel and creates a replica **(this cannot be undone)**\n\
-                - **${bhconfig.prefix}channelcreate** creates a channel *[${bhconfig.prefix}<command> + <channel type (voice/text)> + <channel name>]*\n\
-                - **${bhconfig.prefix}channeldelete** deletes channel command is ran in`)
-                .setFooter(bhconfig.footer) //footer/watermark
+            let embed = new Discord.MessageEmbed()
+                .setAuthor("The Blue Haired Girl", 'https://i.imgur.com/RhSdj8j.png')
+                .setTitle('Join The Discord')
+                .setURL('https://discord.gg/FqbRWkgfcT')
+                .setColor("#486dAA")
+                .setDescription(`A list of admin only commands`)
+                .setThumbnail(msg.guild.iconURL())
+                .addFields(
+                    { name: 'Note', value: `Use ${prefix}checklist to see how you are doing on configuration\n\
+                                            Until you configure ${prefix}setadminroles only roles with ADMINISTRATOR permission will be able to use these commands.`},
+                    { name: `\u200B`, value: `\u200B` },
+                    { name: `Setup`, value: `> ${prefix}blacklist (allows you to blacklist words)\n\
+                                            > ${prefix}serverstats (adds server stat channels)\n\
+                                            > ${prefix}setadminroles (allows you to add admin roles you wish to use admin commands)\n\
+                                            > ${prefix}setapprovalchannel (sets channel where approved suggestions will go)\n\
+                                            > ${prefix}setsuggestchannel (sets channel where users can send an embedded suggestion)\n\
+                                            > ${prefix}setlogschannel (sets channel where action logs will be sent)`},
+                    {name: 'Setup cont...', value: `> ${prefix}setmemberrole (sets base member role, required for captcha verification ${prefix}verify)\n\
+                                            > ${prefix}setmuterole (sets mute role for your server, required to use ${prefix}mute)\n\
+                                            > ${prefix}setprefix (sets custom prefix for your server)\n\
+                                            > ${prefix}setticketcategory (sets category where tickets will go, required for tickets)\n\
+                                            > ${prefix}welcome (sets welcome channel for welcome cards)`},
+                    { name: `User Moderation`, value: `> ${prefix}ban (bans targeted user)\n\
+                                                        > ${prefix}giverole (gives targeted role to targeted user (you don't have to @ the role, but it is CaSe sensitive))\n\
+                                                        > ${prefix}kick (kicks targeted user)\n\
+                                                        > ${prefix}mute (mutes user for spicified number of MINUTES)\n\
+                                                        > ${prefix}removerole (removes targeted role from user)\n\
+                                                        > ${prefix}warn (warns a user for reason specified)\n\
+                                                        > ${prefix}warnlist (see a list of warnings issued)`},
+                    { name: `Server Comamnds`, value: `${prefix}setuphelp or ${prefix}checklist`}
+                )
+                .setTimestamp()
+                .setFooter("Blue Haired Girl By SmallBlue Dev")
             msg.channel.send(embed);
-        }
-    if(bhconfig.embeds === true){
-        let embed = new Discord.MessageEmbed()
-            .setAuthor("Admin Commands Page 2")
-            .setColor(`#486dAA`)
-            .setDescription(`- **${bhconfig.prefix}invitebot** send a bot invite link *[${bhconfig.prefix}<command>]*\n\
-            - **${bhconfig.prefix}invitelink** send a link to the SmallBlue discord *[${bhconfig.prefix}<command>]*\n\
-            - **${bhconfig.prefix}devlopers** shows you the sexy people who created this bot *[${bhconfig.prefix}<command>]*\n\
-            - **${bhconfig.prefix}donate** If you would like to support us *[${bhconfig.prefix}<command>]*\n\
-            - **${bhconfig.prefix}giverole** Gives you the stated role *[${bhconfig.prefix}<command> + <@user> + <role name>]*\n\
-            - **${bhconfig.prefix}removerole** Removes the stated role *[${bhconfig.prefix}<command> + <@user> + <role name>]*\n\
-            - **${bhconfig.prefix}addlogchannel** create a channel called blue-logs and enables logging from the bot on certain events\n\
-            - **${bhconfig.prefix}announce** gives an @everyone announcement in target channel [${bhconfig.prefix}<command> + <target-channel> + <message>]\n\
-            - **${bhconfig.prefix}createrole** creates a role [${bhconfig.prefix}<command> + <color (put any letter in here for default)> + <role name>]\n\
-            - **${bhconfig.prefix}deleterole** deletes the specified role\n\
-            - **${bhconfig.prefix}startgiveaway** starts a giveaway on the last message\n\
-            - **${bhconfig.prefix}endgiveaway** ends a giveaway on the last message (note there must be no new messages in between the start and end)\n\
-            - **${bhconfig.prefix}ticket** creates an open ticket channel and sends ticket to this channel (this is kept in admin commands to prevent spamming)`)
-            .setFooter(bhconfig.footer) 
-        msg.channel.send(embed);
         }
     }   
 }
