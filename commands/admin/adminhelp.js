@@ -42,7 +42,8 @@ module.exports = {
                                             > ${prefix}setmuterole (sets mute role for your server, required to use ${prefix}mute)\n\
                                             > ${prefix}setprefix (sets custom prefix for your server)\n\
                                             > ${prefix}setticketcategory (sets category where tickets will go, required for tickets)\n\
-                                            > ${prefix}welcome (sets welcome channel for welcome cards)`},
+                                            > ${prefix}welcome (sets welcome channel for welcome cards)\n\
+                                            > ${prefix}antiad (disallows any server invites unless they are from admin roles)`},
                     { name: `User Moderation`, value: `> ${prefix}ban (bans targeted user)\n\
                                                         > ${prefix}giverole (gives targeted role to targeted user (you don't have to @ the role, but it is CaSe sensitive))\n\
                                                         > ${prefix}kick (kicks targeted user)\n\
@@ -50,7 +51,22 @@ module.exports = {
                                                         > ${prefix}removerole (removes targeted role from user)\n\
                                                         > ${prefix}warn (warns a user for reason specified)\n\
                                                         > ${prefix}warnlist (see a list of warnings issued)`},
-                    { name: `Server Comamnds`, value: `${prefix}setuphelp or ${prefix}checklist`}
+                    { name: `Server Commands`, value: `> ${prefix}checklist (tells you what has been configured)\n\
+                                                        > ${prefix}announce (sends an embedded announcment to a targeted channel)\n\
+                                                        > ${prefix}channelcreate (creates a channel with the name you specify)\n\
+                                                        > ${prefix}createrole (creates a role with the color and name you specify [color must be hex and  is optional])\n\
+                                                        > ${prefix}deletechannel (deletes targeted channel)\n\
+                                                        > ${prefix}deleterole (deletes targeted role)\n\
+                                                        > ${prefix}invites (tracks current invites created by user and how many times they've been used)\n\
+                                                        > ${prefix}nuke (deletes all contents of channel and clones it)\n\
+                                                        > ${prefix}purge (purges selected unmber of messages from channel)`},
+                    { name: 'Ticket Commands', value: `> ${prefix}add (Adds a targeted user to the ticket)\n\
+                                                        > ${prefix}close (closes the ticket)`},
+                    { name: 'Suggestion Commands', value: `> ${prefix}approve (approves the selected sID, or suggestion ID and moves it to you specified approval channel)`},
+                    { name: 'Economy', value: `> ${prefix}addbal (adds specified balance to user's economy profile within your server)`},
+                    { name: 'Server Wellbeing', value: `> ${prefix}deletedata (By default when you kick our bot form your server all of your data is automatically deleted.\
+                                                                    if you, however, wish to manually do this, the deletedata command will wipe any and all saved data fromy our server.\n\n\
+                                                                    **Note:** The only data we store is directly related to the bots functionality and your server's customization.)`}
                 )
                 .setTimestamp()
                 .setFooter("Blue Haired Girl By SmallBlue Dev")

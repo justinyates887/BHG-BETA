@@ -85,7 +85,7 @@ const loadCommands = (client) => {
             //  for(const requiredRole of requiredRoles){
             //      const role = guild.roles.cache.find(role => {
             //          role.name === requiredRole
-            //      })
+            //      }) 
 
             //      if(!role || member.roles.cache.has(role.id)){
             //          return msg.reply(`You must have the ${role} to use this command.`)
