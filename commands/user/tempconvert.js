@@ -1,5 +1,4 @@
 const bhconfig = require("../core/bhconfig.json");
-const fs = require("fs");
 const Discord = require("discord.js");
 
 module.exports = {
