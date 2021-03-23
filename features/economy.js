@@ -34,6 +34,25 @@ module.exports.addCoins = async (guildID, uID, coins) => {
     })
 }
 
+module.exports.removeCoins = async (guildID, uID, coins) => {
+    await mongo()
+    .then(async mongoose => {
+        try{
+            profileSchema.findOneAndUpdate({
+                _id: uID
+            }, {
+                _id: uID,
+                gID: guildID,
+                coins: coins
+            }, {
+                upsert: true
+            })
+        }catch(err){
+            console.error(`Error at economy.js(43): ${err}`)
+        }
+    })
+}
+
 module.exports.getCoins = async (guildID, uID) => {
     const cachedValue = coinsCache[`${guildID}-${uID}`]
     if(cachedValue){

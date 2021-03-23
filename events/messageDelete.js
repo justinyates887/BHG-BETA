@@ -15,7 +15,7 @@ module.exports = async (client, message) => {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("❌ Message Deleted")
                 .setColor("#FF0000")
-                .setDescription(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id} by <@${discordLog.executor.id}>`)
+                .setDescription(`Message *${message.content}* sent by <@${message.author.id}> deleted in <#${message.channel.id}> by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
              return target.send(embed);
         }
