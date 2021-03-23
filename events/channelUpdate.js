@@ -16,12 +16,12 @@ module.exports = async (client, channel) => {
             let embed = new Discord.MessageEmbed()
                 .setAuthor("📝 Channel Update")
                 .setColor("#FFDF00")
-                .setDescription(`Channel <#${channel.id}> was just updated by ${discordLog.executor.id}`)
+                .setDescription(`Channel <#${channel.id}> was just updated by <@${discordLog.executor.id}>`)
                 .setFooter(bhconfig.footer)
              return target.send(embed);
         }
         else {
-            return target.send(`Channel <#${channel.id}> was just updated by ${discordLog.executor.id}`);
+            return target.send(`Channel <#${channel.id}> was just updated by <@${discordLog.executor.id}>`);
         }
     }
 }
