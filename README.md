@@ -1,7 +1,7 @@
 ## Welcome to the official "Blue Haired Girl" Discord bot project!
 
 ![Language](https://img.shields.io/github/languages/top/justinyates887/blue-haired-girl-bot?color=yellow)
-![total line](https://img.shields.io/tokei/lines/github/justinyates887/blue-haired-girl-bot)
+![total line](https://img.shields.io/tokei/lines/github/justinyates887/BHG-BETA)
 ![license](https://img.shields.io/badge/License-GNU-blueviolet)
 ![maintained](https://img.shields.io/maintenance/yes/2021)
 
