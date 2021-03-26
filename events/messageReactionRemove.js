@@ -7,6 +7,7 @@ const reactionSchema = require('../commands/setup/schemas/reaction-schema')
  */
 
 module.exports = async (client, reaction, user) => {
+    let member = reaction.message.guild.members.cache.get(user.id)
     reactionSchema.findOne({
         _id: reaction.message.guild.id,
         mID: reaction.message.id,
@@ -15,9 +16,9 @@ module.exports = async (client, reaction, user) => {
     }, async(err, data) => {
         if(err) throw err;
         if(data){
-            if(!reaction.message.member.roles.cache.has(data.role)){};
+            if(!member.roles.cache.has(data.role)){return};
         } else {
-            reaction.message.member.roles.remove(data.role)
+            member.roles.remove(data.role)
         }
     })
 }
