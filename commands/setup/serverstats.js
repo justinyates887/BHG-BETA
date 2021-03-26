@@ -116,8 +116,6 @@ module.exports.updateChannels = async (guildID, guild) => {
         try{
             await serverStatsSchema.findOne({ _id: guildID })
             .then(async result => {
-                console.log(result)
-
                 const membersChannel = guild.channels.cache.find((channel) => {
                     return channel.id === `${result.users[0]}`;
                 });
