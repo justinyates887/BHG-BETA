@@ -35,14 +35,14 @@ module.exports = {
         const guildID = msg.guild.id
         const result = await getRoles(guildID)
         const muteRole = result.mute
-        const muteFind = msg.guild.roles.cache.find(role => role.id === muteRole)
+        const muteFind = msg.guild.roles.cache.find(r => r.id === muteRole)
 
         if(!muteFind){
-            msg.reply(`I couldn't find your muted role <@${muteRole}>. Please update mute role!`)
+            return msg.reply(`I couldn't find your muted role <@${muteRole}>. Please update mute role!`)
         }
 
         if(!muteRole || muteRole === null){
-            msg.reply('Could not find a mute role. Have you configured a mute role for this server? [b!checklist]')
+           return msg.reply('Could not find a mute role. Have you configured a mute role for this server? [b!checklist]')
         }
 
         //if no duration specified, mute the member indefinatly
@@ -88,10 +88,8 @@ module.exports = {
 
            return msg.channel.send(`<@${target.id}> muted for ${duration / 60} minutes`)
         } catch(err) {
-            console.error(`Error in mute.js(72): ${err}`)
+            return console.error(`Error in mute.js(72): ${err}`)
         }
-
-
     }
 }
  

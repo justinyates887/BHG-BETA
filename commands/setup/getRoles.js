@@ -4,11 +4,6 @@ const mongo = require('../../mongo');
 const guildRolesSchema = require ('./schemas/guild-roles-schema')
 
 module.exports.getRoles = async (guildID) => {
-    const cachedRoles = rolesCache[guildID]
-    if(cachedRoles){
-        return cachedRoles;
-    }
-
     return await mongo()
     .then(async (mongoose) => {
         try{

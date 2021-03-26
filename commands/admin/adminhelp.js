@@ -62,8 +62,10 @@ module.exports = {
                                                         > ${prefix}purge (purges selected unmber of messages from channel)`},
                     { name: 'Ticket Commands', value: `> ${prefix}add (Adds a targeted user to the ticket)\n\
                                                         > ${prefix}close (closes the ticket)`},
-                    { name: 'Suggestion Commands', value: `> ${prefix}approve (approves the selected sID, or suggestion ID and moves it to you specified approval channel)`},
-                    { name: 'Economy', value: `> ${prefix}addbal (adds specified balance to user's economy profile within your server)`},
+                    { name: 'Suggestion Commands', value: `> ${prefix}approve (approves the selected sID, or suggestion ID and moves it to you specified approval channel)\n\
+                                                        > ${prefix}delete (deletes a suggestion by sID) [${prefix}delete Tjma54]`},
+                    { name: 'Economy', value: `> ${prefix}addbal (adds specified balance to user's economy profile within your server)\n\
+                                                >${prefix}removebal (removes balance from a specified user)`},
                     { name: 'Server Wellbeing', value: `> ${prefix}deletedata (By default when you kick our bot form your server all of your data is automatically deleted.\
                                                                     if you, however, wish to manually do this, the deletedata command will wipe any and all saved data fromy our server.\n\n\
                                                                     **Note:** The only data we store is directly related to the bots functionality and your server's customization.)`}

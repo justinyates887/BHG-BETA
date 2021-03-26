@@ -4,7 +4,7 @@ const logSuggestionsSchema = require('../setup/schemas/log-suggestions-schema')
 const suggestSchema = require('../setup/schemas/suggest-schema')
 
 module.exports = {
-    name: 'deletesug',
+    name: 'delete',
     description: 'deletes a suggestion by ID',
 
     async execute(client, msg, args){
