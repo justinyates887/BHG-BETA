@@ -33,8 +33,13 @@ module.exports = {
         const guildRoles = guild.roles.cache.size
         const guildChannels = guild.channels.cache.size
 
+        const category = await guild.channels.create('📈 Server Stats', {
+            type: 'category'
+        })
+
         await guild.channels.create(`Members: ${guildUsers}`, {
             type: 'voice',
+            parent: category.id,
             permissionOverwrites: [{
                 id: msg.guild.id,
                 deny: ["CONNECT"]
@@ -43,6 +48,7 @@ module.exports = {
 
         await guild.channels.create(`Bots: ${guildBots}`, {
             type: 'voice',
+            parent: category.id,
             permissionOverwrites: [{
                 id: msg.guild.id,
                 deny: ["CONNECT"]
@@ -51,6 +57,7 @@ module.exports = {
 
         await guild.channels.create(`Channels: ${guildChannels}`, {
             type: 'voice',
+            parent: category.id,
             permissionOverwrites: [{
                 id: msg.guild.id,
                 deny: ["CONNECT"]
@@ -59,6 +66,7 @@ module.exports = {
 
         await guild.channels.create(`Roles: ${guildRoles}`, {
             type: 'voice',
+            parent: category.id,
             permissionOverwrites: [{
                 id: msg.guild.id,
                 deny: ["CONNECT"]
@@ -94,6 +102,7 @@ module.exports = {
                 }, {
                     upsert: true
                 })
+                return
             } catch(err){
                 return console.error(`Error at serverstats.js(65): ${err}`)
             }
@@ -102,7 +111,7 @@ module.exports = {
 }
 
 module.exports.updateChannels = async (guildID, guild) => {
-    await mongo()
+    return await mongo()
     .then(async mongoose => {
         try{
             await serverStatsSchema.findOne({ _id: guildID })
@@ -143,7 +152,7 @@ module.exports.updateChannels = async (guildID, guild) => {
                 })
             })
         } catch(err){
-            console.error(`Error at updateChannels(serverstats.js)(97): ${err}`)
+            return console.error(`Error at updateChannels(serverstats.js)(97): ${err}`)
         }
     })
 }
