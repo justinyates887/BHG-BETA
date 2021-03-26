@@ -9,6 +9,10 @@ const reactionSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    cID: {
+        type: String,
+        required: true
+    },
     reaction: {
         type: String,
         required: true
