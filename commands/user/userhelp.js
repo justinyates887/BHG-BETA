@@ -34,6 +34,7 @@ module.exports = {
                     { name: 'Economy', value: `> ${prefix}pay (allows you to pay another user coins you have been given)\n\
                                                > ${prefix}balance (allows you to see your current coin balance)` },
                     { name: `Interaction`, value: `> ${prefix}invitelink (creates an infinite invite link for the current server)\n\
+                                                    > ${prefix}myinvites or leaderboard (shows invite stats)\n\
                                                     > ${prefix}suggest (Requires guild owner setup, sends a suggestion in an embed that can then be accepted by staff)\n\
                                                     > ${prefix}verify (Requires guild owner setup, sends you a captcha to complete and gives you the server\`s member role)\n\
                                                     > ${prefix}ticket (Requires guild owner setup, allows you to create a private ticket with staff)\n\
