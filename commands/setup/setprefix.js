@@ -29,7 +29,6 @@ module.exports = {
             return msg.channel.send('Missing permissions');
         }
 
-        await mongo().then(async mongoose => {
             try{
                 const guildId = msg.guild.id;
 
@@ -45,14 +44,10 @@ module.exports = {
                         upsert: true
                     })
 
-                    return msg.reply(`The prefix for this server is now ${args[0]}`)
+                    msg.reply(`The prefix for this server is now ${args[0]}`)
             } catch (err){
                 return console.error(`Eror at setprefix.js(32): ${err}`)
             }
-        }).then(() => {
             return commandBase.loadPrefixes(client)
-        }).catch(err => {
-            return console.error(`Error in loading prefixes (setprefixes.js)(35): ${err}`)
-        })
     }
 }

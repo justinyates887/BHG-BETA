@@ -4,7 +4,7 @@ const Discord = require('discord.js')
 
 module.exports = async (client, member) => {
     const logs = await checkLogs(member.guild.id)
-    if(logs.desired === true){
+    if(logs && logs.desired === true){
         const target = member.guild.channels.cache.find(channel => channel.id === logs.cID)
         const fetchedLogs = await member.guild.fetchAuditLogs({
             limit: 1,

@@ -109,20 +109,17 @@ const loadCommands = (client) => {
 }
 
 const loadPrefixes = async (client) => {
-    await mongo()
-        .then(async mongoose => {
-            try{
-                for(const guild of client.guilds.cache){
-                    const result = await commandPrefixSchema.findOne({ _id: guild[1].id})
-                    console.log(result)
-                    if(result){
-                        guildPrefixes[guild[1].id] = result.prefix;
-                    }
-                }
-            } catch (err) {
-                console.error(`Error at command-base.js(123): ${err}`)
+    try{
+        for(const guild of client.guilds.cache){
+            const result = await commandPrefixSchema.findOne({ _id: guild[1].id})
+            console.log(result)
+            if(result){
+                guildPrefixes[guild[1].id] = result.prefix;
             }
-        })
+        }
+    } catch (err) {
+        console.error(`Error at command-base.js(123): ${err}`)
+    }
 }
 
 module.exports.loadPrefixes = loadPrefixes;

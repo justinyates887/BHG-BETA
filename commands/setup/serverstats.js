@@ -89,68 +89,62 @@ module.exports = {
             return channel.name === `Roles: ${guildRoles}`;
         });
 
-        return await mongo()
-        .then(async mongoose => {
-            try{
-                await serverStatsSchema.findOneAndUpdate({
-                    _id: msg.guild.id,
-                }, {
-                    users: [membersChannel.id, guildUsers],
-                    roles: [rolesChannel.id, guildRoles],
-                    channels: [channelsChannel.id, guildChannels],
-                    bots: [botsChannel.id, guildBots]
-                }, {
-                    upsert: true
-                })
-                return
-            } catch(err){
-                return console.error(`Error at serverstats.js(65): ${err}`)
-            }
-        })
+        try{
+            await serverStatsSchema.findOneAndUpdate({
+                _id: msg.guild.id,
+            }, {
+                users: [membersChannel.id, guildUsers],
+                roles: [rolesChannel.id, guildRoles],
+                channels: [channelsChannel.id, guildChannels],
+                bots: [botsChannel.id, guildBots]
+            }, {
+                upsert: true
+            })
+            return
+        } catch(err){
+            return console.error(`Error at serverstats.js(65): ${err}`)
+        }
     }
 }
 
 module.exports.updateChannels = async (guildID, guild) => {
-    return await mongo()
-    .then(async mongoose => {
-        try{
-            await serverStatsSchema.findOne({ _id: guildID })
-            .then(async result => {
-                const membersChannel = guild.channels.cache.find((channel) => {
-                    return channel.id === `${result.users[0]}`;
-                });
-                membersChannel.setName(`Members: ${guild.members.cache.filter(member => !member.user.bot).size}`)
+    try{
+        await serverStatsSchema.findOne({ _id: guildID })
+        .then(async result => {
+            const membersChannel = guild.channels.cache.find((channel) => {
+                return channel.id === `${result.users[0]}`;
+            });
+            membersChannel.setName(`Members: ${guild.members.cache.filter(member => !member.user.bot).size}`)
 
-                const rolesChannel = guild.channels.cache.find((channel) => {
-                    return channel.id === `${result.roles[0]}`;
-                });
-                rolesChannel.setName(`Roles: ${guild.roles.cache.size}`)
+            const rolesChannel = guild.channels.cache.find((channel) => {
+                return channel.id === `${result.roles[0]}`;
+            });
+            rolesChannel.setName(`Roles: ${guild.roles.cache.size}`)
 
-                const channelsChannel = guild.channels.cache.find((channel) => {
-                    return channel.id === `${result.channels[0]}`;
-                });
-                channelsChannel.setName(`Channels: ${guild.channels.cache.size}`)
+            const channelsChannel = guild.channels.cache.find((channel) => {
+                return channel.id === `${result.channels[0]}`;
+            });
+            channelsChannel.setName(`Channels: ${guild.channels.cache.size}`)
 
-                const botsChannel = guild.channels.cache.find((channel) => {
-                    return channel.id === `${result.bots[0]}`;
-                });
-                botsChannel.setName(`Bots: ${guild.members.cache.filter(member => member.user.bot).size}`)
+            const botsChannel = guild.channels.cache.find((channel) => {
+                return channel.id === `${result.bots[0]}`;
+            });
+            botsChannel.setName(`Bots: ${guild.members.cache.filter(member => member.user.bot).size}`)
 
-                await serverStatsSchema.findOneAndUpdate({
-                    _id: guildID
-                },{
-                    $addToSet: {
-                        users: [membersChannel.id, guild.members.cache.filter(member => !member.user.bot).size],
-                        roles: [rolesChannel.id, guild.roles.cache.size],
-                        channels: [channelsChannel.id, guild.channels.cache.size],
-                        bots: [botsChannel.id, guild.members.cache.filter(member => member.user.bot).size]
-                    },
-                }, {
-                    upsert: true
-                })
+            await serverStatsSchema.findOneAndUpdate({
+                _id: guildID
+            },{
+                $addToSet: {
+                    users: [membersChannel.id, guild.members.cache.filter(member => !member.user.bot).size],
+                    roles: [rolesChannel.id, guild.roles.cache.size],
+                    channels: [channelsChannel.id, guild.channels.cache.size],
+                    bots: [botsChannel.id, guild.members.cache.filter(member => member.user.bot).size]
+                },
+            }, {
+                upsert: true
             })
-        } catch(err){
-            return console.error(`Error at updateChannels(serverstats.js)(97): ${err}`)
-        }
-    })
+        })
+    } catch(err){
+        return console.error(`Error at updateChannels(serverstats.js)(97): ${err}`)
+    }
 }

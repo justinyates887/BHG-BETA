@@ -4,7 +4,7 @@ const Discord = require('discord.js')
 
 module.exports = async (client, emoji) => {
     const logs = await checkLogs(emoji.guild.id)
-    if(logs.desired === true){
+    if(logs && logs.desired === true){
         const target = emoji.guild.channels.cache.find(channel => channel.id === logs.cID)
         const fetchedLogs = await emoji.guild.fetchAuditLogs({
             limit: 1,

@@ -48,25 +48,22 @@ module.exports = async (client, msg) => {
             const guild = msg.guild
             const isOurInvite = await isInvite(guild, code)
             if(isOurInvite === false){
-                await mongo()
-                .then(async mongoose => {
-                    try{
-                        for(const guild of client.guilds.cache){
-                            const result = await antiAdSchema.findOne({ _id: msg.guild.id})
-                            console.log(result)
-                            if(result && result.desired === true){
-                                console.log(msg);
-                                msg.delete();
-                                return msg.channel.send('Advertisments are not allowed.')
-                            } else {
-                                return
-                            }
+                try{
+                    for(const guild of client.guilds.cache){
+                        const result = await antiAdSchema.findOne({ _id: msg.guild.id})
+                        console.log(result)
+                        if(result && result.desired === true){
+                            console.log(msg);
+                            msg.delete();
+                            return msg.channel.send('Advertisments are not allowed.')
+                        } else {
+                            return
                         }
-                    } catch (err) {
-                        console.error(`Error at db message.js(event)(73): ${err}`)
-                        return
                     }
-                })
+                } catch (err) {
+                    console.error(`Error at db message.js(event)(73): ${err}`)
+                    return
+                }
             }
         }
     }

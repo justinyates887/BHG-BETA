@@ -43,24 +43,21 @@ module.exports = {
             msg.reply('Not a valid category id!')
         }
 
-        await mongo()
-        .then(async mongoose => {
-            try{
-                const guildID = msg.guild.id;
+        try{
+            const guildID = msg.guild.id;
 
-                await ticketSchema.findOneAndUpdate({
-                    _id: guildID,
-                }, {
-                    cID: category.id
-                }, {
-                    upsert: true
-                })
+            await ticketSchema.findOneAndUpdate({
+                _id: guildID,
+            }, {
+                cID: category.id
+            }, {
+                upsert: true
+            })
 
-                return msg.reply(`The ticket category for this server is now ${category.id}`)
-            }catch(err){
-                return console.error(`Error at setticket.js(50): ${err}`)
-            }
-        })
+            return msg.reply(`The ticket category for this server is now ${category.id}`)
+        }catch(err){
+            return console.error(`Error at setticket.js(50): ${err}`)
+        }
     }
 }
 
@@ -70,18 +67,15 @@ module.exports.getTicketCat = async (guildID) => {
         return cachedID;
     }
 
-    return await mongo()
-    .then(async (mongoose) => {
-        try{
-            const result = await ticketSchema.findOne({
-                _id: guildID
-            })
+    try{
+        const result = await ticketSchema.findOne({
+            _id: guildID
+        })
 
-            idCache[guildID] = [result.cID];
+        idCache[guildID] = [result.cID];
 
-            return result
-        } catch(err){
-            return console.error(`Error at getRoles.js(17): ${err}`)
-        }
-    })
+        return result
+    } catch(err){
+        return console.error(`Error at getRoles.js(17): ${err}`)
+    }
 }

@@ -18,7 +18,6 @@ module.exports = async (client, guild) => {
                         To follow production visit us at https://github.com/justinyates887/blue-haired-girl-bot \n\n\
                         To report a bug please message \
                         @Protest#9576, @Mr.Floyd 🇨🇦#0420 or join the Official Discord Channel: https://discord.gg/tb4mZWtXC8")
-                        .setFooter(config.footer)
                          channel.send(embed);
                 }
                 return found = 1;

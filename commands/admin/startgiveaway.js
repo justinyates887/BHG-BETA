@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const bhconfig = require('../core/bhconfig.json')
 const { checkLogs } = require('../setup/setlogschannel')
 const { getRoles } = require('../setup/getRoles')
 const redis = require('../../redis');
@@ -195,7 +196,6 @@ module.exports = {
                             .setAuthor("✅ Giveaway Ended!")
                             .setColor("#008000")
                             .setDescription(`Giveaway ${giveaway} just ended. Here are the winners:\n${winners}`)
-                            .setFooter(bhconfig.footer)
                          logtarget.send(logembed);
                     }
                     else {

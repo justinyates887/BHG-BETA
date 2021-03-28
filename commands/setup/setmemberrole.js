@@ -31,26 +31,24 @@ module.exports = {
         const role = msg.mentions.roles.first();
         const roleID = role.id
 
-        await mongo().then(async mongoose => {
-            try{
-                const guildId = msg.guild.id;
+        try{
+            const guildId = msg.guild.id;
 
-                await guildRolesSchema.findOneAndUpdate(
-                    {
-                        _id: guildId
-                    },
-                    {
-                        _id: guildId,
-                        base: roleID
-                    }, 
-                    {
-                        upsert: true
-                    })
+            await guildRolesSchema.findOneAndUpdate(
+                {
+                    _id: guildId
+                },
+                {
+                    _id: guildId,
+                    base: roleID
+                }, 
+                {
+                    upsert: true
+                })
 
-                    return msg.reply(`The base member role for this server is now ${role}`)
-            } catch (err){
-                return console.error(`Eror at setmemberrole.js(34): ${err}`)
-            }
-        })
+                return msg.reply(`The base member role for this server is now ${role}`)
+        } catch (err){
+            return console.error(`Eror at setmemberrole.js(34): ${err}`)
+        }
     }
 }

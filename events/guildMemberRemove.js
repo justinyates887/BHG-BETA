@@ -9,7 +9,7 @@ module.exports = async (client, member, guild) => {
     removeProfile(member.id, member.user.id)
 
     const logs = await checkLogs(member.guild.id)
-    if(logs.desired === true){
+    if(logs && logs.desired === true){
         const target = member.guild.channels.cache.find(channel => channel.id === logs.cID)
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()

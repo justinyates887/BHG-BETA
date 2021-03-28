@@ -33,35 +33,30 @@ module.exports = {
         if(!sID){
             return msg.reply(`Please specify a sID`)
         }
-
-        const result = await mongo()
-        .then(async mongoose => {
-            try{
-                const data = await logSuggestionsSchema.findOne({
-                    guild: msg.guild.id,
-                    sID: sID
-                })
-                return data
-            } catch{
-                return console.error(`Error: ${err}`)
-            }
-        })
+        let result;
+        try{
+            const data = await logSuggestionsSchema.findOne({
+                guild: msg.guild.id,
+                sID: sID
+            })
+            result = data
+        } catch{
+            return console.error(`Error: ${err}`)
+        }
 
         if(!result){
             msg.reply(`I couldn't find a suggestion under that ID`)
         }
 
-        const approvalChannel = await mongo()
-        .then(async mongoose => {
-            try{
-                const channel = await suggestSchema.findOne({
-                    _id: msg.guild.id
-                })
-                return channel
-            } catch(err){
-                return console.error(err)
-            }
-        })
+        let approvalChannel;
+        try{
+            const channel = await suggestSchema.findOne({
+                _id: msg.guild.id
+            })
+            approvalChannel = channel
+        } catch(err){
+            return console.error(err)
+        }
 
         if(!approvalChannel){
             msg.reply(`I could find any channels for suggestions. have you set them up?`)
@@ -87,17 +82,13 @@ module.exports = {
 
         approvalTarget.send(embed)
 
-        await mongo()
-        .then(async mongoose => {
-            try{
-                await logSuggestionsSchema.findOneAndDelete({
-                    sID: sID
-                })
-                return
-            } catch(err){
-                return console.error(err)
-            }
-        })
+        try{
+            await logSuggestionsSchema.findOneAndDelete({
+                sID: sID
+            })
+        } catch(err){
+            return console.error(err)
+        }
 
         msg.delete();
         return oldSuggestion.delete()

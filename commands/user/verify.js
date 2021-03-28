@@ -8,17 +8,15 @@ module.exports = {
     descirption: 'verification for new members',
 
     async execute(client, msg, args){
-        const result = await mongo()
-        .then(async mongoose => {
-            try{
-                const data = await guildRolesSchema.findOne({
-                    _id: msg.guild.id
-                })
-                return data
-            }catch(err){
-                return console.error(err)
-            }
-        })
+        let result;
+        try{
+            const data = await guildRolesSchema.findOne({
+                _id: msg.guild.id
+            })
+            result = data
+        }catch(err){
+            return console.error(err)
+        }
         if(!result.base){
             msg.reply(`Verification has not been configured, no member role found.`)
         }

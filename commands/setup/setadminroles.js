@@ -39,26 +39,24 @@ module.exports = {
 
         console.log(roles)
 
-        await mongo().then(async mongoose => {
-            try{
-                const guildId = msg.guild.id;
+        try{
+            const guildId = msg.guild.id;
 
-                await guildRolesSchema.findOneAndUpdate(
-                    {
-                        _id: guildId
-                    },
-                    {
-                        _id: guildId,
-                        admin: roles
-                    }, 
-                    {
-                        upsert: true
-                    })
+            await guildRolesSchema.findOneAndUpdate(
+                {
+                    _id: guildId
+                },
+                {
+                    _id: guildId,
+                    admin: roles
+                }, 
+                {
+                    upsert: true
+                })
 
-                    return msg.reply(`The admin roles for this server are now ${args}`)
-            } catch (err){
-                return console.error(`Eror at setmuterole.js(34): ${err}`)
-            }
-        })
+                return msg.reply(`The admin roles for this server are now ${args}`)
+        } catch (err){
+            return console.error(`Eror at setmuterole.js(34): ${err}`)
+        }
     }
 }
