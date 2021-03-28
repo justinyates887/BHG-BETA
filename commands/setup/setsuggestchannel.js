@@ -34,25 +34,22 @@ module.exports = {
             return msg.reply('No valid channel could be found')
         }
 
-        return await mongo()
-        .then(async mongoose => {
-            try{
-                const guildID = msg.guild.id
+        try{
+            const guildID = msg.guild.id
 
-                await suggestSchmea.findOneAndUpdate({
-                    _id: guildID
-                },{
-                    _id: guildID,
-                    cID: target.id,
-                }, {
-                    upsert: true
-                })
+            await suggestSchmea.findOneAndUpdate({
+                _id: guildID
+            },{
+                _id: guildID,
+                cID: target.id,
+            }, {
+                upsert: true
+            })
 
-                return msg.reply(`The suggestions channel is now <#${target.id}>`)
-            } catch(err){
-                return console.error(`Error at setsuggest(48): ${err}`)
-            }
-        })
+            return msg.reply(`The suggestions channel is now <#${target.id}>`)
+        } catch(err){
+            return console.error(`Error at setsuggest(48): ${err}`)
+        }
     }
 }
 

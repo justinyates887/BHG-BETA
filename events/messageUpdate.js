@@ -7,7 +7,7 @@ module.exports = async (client, message) => {
         return
     }
     const logs = await checkLogs(message.guild.id)
-    if(logs.desired === true){
+    if(logs && logs.desired === true){
         const target = message.guild.channels.cache.find(channel => channel.id === logs.cID)
 
         if (bhconfig.embeds === true) {

@@ -3,6 +3,7 @@ require('dotenv').config();
 
 module.exports = async () => {
     await mongoose.connect(process.env.MONGO, {
+        keepAlive: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });

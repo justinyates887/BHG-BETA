@@ -67,27 +67,23 @@ module.exports = {
             timestamp: new Date().getTime(),
             warnReason
         }
-
-        await mongo()
-            .then(async mongoose => {
-                try{
-                    await warnSchema.findOneAndUpdate({
-                      _id: uID,
-                      gID: guildID  
-                    }, {
-                        _id: uID,
-                        gID: guildID,
-                        $push: {
-                            warnings: warning
-                        }
-                    }, {
-                        upsert: true
-                    })
-                } catch (err){
-                    return console.error(`Error at db warn.js(60): ${err}`)
-                }
-            })
-
+            try{
+                await warnSchema.findOneAndUpdate({
+                    _id: uID,
+                    gID: guildID  
+                }, {
+                    _id: uID,
+                    gID: guildID,
+                    $push: {
+                        warnings: warning
+                    }
+                }, {
+                    upsert: true
+                })
+            } catch (err){
+                return console.error(`Error at db warn.js(60): ${err}`)
+            }
+            
         if (target && warnReason){
             if (bhconfig.embeds === true) {
                 let embed = new Discord.MessageEmbed()

@@ -11,7 +11,7 @@ const { getChannelID } = require('../commands/setup/welcome')
 
 module.exports = async (client, member) => {
     const logs = await checkLogs(member.guild.id)
-    if(logs.desired === true){
+    if(logs && logs.desired === true){
         const target = member.guild.channels.cache.find(channel => channel.id === logs.cID)
         if (bhconfig.embeds === true) {
             let embed = new Discord.MessageEmbed()

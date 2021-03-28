@@ -29,34 +29,28 @@ module.exports = {
         
         let target = msg.mentions.channels.first();
 
-        await mongo()
-        .then(async mongoose => {
-            try {
-                await logsSchema.findOneAndUpdate({
-                    _id: msg.guild.id
-                }, {
-                    cID: target.id,
-                    desired: true
-                }, {
-                    upsert: true
-                })
-            } catch(err){
-                return console.error(`Error at setlogschannel(23): ${err}`)
-            }
-        })
+        try {
+            await logsSchema.findOneAndUpdate({
+                _id: msg.guild.id
+            }, {
+                cID: target.id,
+                desired: true
+            }, {
+                upsert: true
+            })
+        } catch(err){
+            return console.error(`Error at setlogschannel(23): ${err}`)
+        }
 
         return msg.reply(`Logs channel set to ${target}`)
     }
 }
 
 module.exports.checkLogs = async (guildID) => {
-    return await mongo()
-    .then(async mongoose => {
-        const result = await logsSchema.findOne({ _id: guildID });
+    const result = await logsSchema.findOne({ _id: guildID });
 
-        if(!result.desired === true){
-            return
-        }
-        return result
-    })
+    if(!result || !result.desired === true || result === null){
+        return
+    }
+    return result
 }

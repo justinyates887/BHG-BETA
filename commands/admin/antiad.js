@@ -10,7 +10,7 @@ module.exports = {
      async execute(client, msg, args){
         const admin = await getRoles(msg.guild.id)
         const checkRoles = function(admin){
-            if(admin && admin.admin){
+            if(!admin === null && admin.admin){
                 let result;
                 for(let i = 0; i < admin.admin.length; i++){
                     const role =  msg.member.guild.roles.cache.find(r => r.id === admin.admin[i])
@@ -29,7 +29,7 @@ module.exports = {
         }
 
         let filter = m => m.author.id === msg.author.id;
-        msg.reply('Please enter a command for anti-ads: (on/off)')
+        msg.reply('Please respond with a command for anti-ads: (on/off)')
 
         msg.channel.awaitMessages(filter, {
             max: 1,
@@ -39,45 +39,41 @@ module.exports = {
         .then(async msg => {
             msg = msg.first();
             if(msg.content.toLowerCase() === 'on') {
-                await mongo().then(async mongoose => {
-                    try{
-                        const guildId = msg.guild.id;
-                        await antiAdSchema.findOneAndUpdate(
-                            {
-                                _id: guildId
-                            },
-                            {
-                                desired: true,
-                            },
-                            {
-                                upsert: true
-                            })
-        
-                            msg.reply(`The antiad is now ON`)
-                    } catch (err){
-                        console.error(`Error in db antiad.js(41): ${err}`)
-                    }
-            })
+                try{
+                    const guildId = msg.guild.id;
+                    await antiAdSchema.findOneAndUpdate(
+                        {
+                            _id: guildId
+                        },
+                        {
+                            desired: true,
+                        },
+                        {
+                            upsert: true
+                        })
+    
+                        return msg.reply(`The antiad is now ON`)
+                } catch (err){
+                    return console.error(`Error in db antiad.js(41): ${err}`)
+                }
             } else if(msg.content.toLowerCase() === 'off'){
-                await mongo().then(async mongoose => {
-                    try{
-                        const guildId = msg.guild.id;
-                        await antiAdSchema.findOneAndUpdate(
-                            {
-                                _id: guildId
-                            },
-                            {
-                                desired: false,
-                            },
-                            {
-                                upsert: true
-                            })
-        
-                            msg.reply(`The anti-ads are now OFF`)
-                    } catch (err){
-                        console.error(`Error at db antiad.js(61): ${err}`)
-                    }
-                })
+                try{
+                    const guildId = msg.guild.id;
+                    await antiAdSchema.findOneAndUpdate(
+                        {
+                            _id: guildId
+                        },
+                        {
+                            desired: false,
+                        },
+                        {
+                            upsert: true
+                        })
+    
+                        return msg.reply(`The anti-ads are now OFF`)
+                } catch (err){
+                   return console.error(`Error at db antiad.js(61): ${err}`)
+                }
             } else {
                 return msg.reply('No valid input recieved')
             }

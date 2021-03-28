@@ -46,20 +46,18 @@ module.exports = {
             msg.reply(`Please specify a target channel`)
         }
 
-        await mongo().then(async (mongoose) => {
-            try{
-                 await welcomeSchema.findOneAndUpdate({
-                     _id: guild.id
-                 }, {
-                    _id: guild.id,
-                    channelID: target.id,
+        try{
+                await welcomeSchema.findOneAndUpdate({
+                    _id: guild.id
                 }, {
-                   upsert: true 
-                })
-            } catch (err){
-                return console.error(`Error at db welcome.js(36)`)
-            }
-        })
+                _id: guild.id,
+                channelID: target.id,
+            }, {
+                upsert: true 
+            })
+        } catch (err){
+            return console.error(`Error at db welcome.js(36)`)
+        }
 
         cache.set(guild.id, target.id)
 

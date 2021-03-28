@@ -30,33 +30,29 @@ module.exports = {
 
         const sID = args[0]
 
-        const suggestion = await mongo()
-        .then(async mongoose => {
-            try{
-                const result = logSuggestionsSchema.findOne({
-                    guild: msg.guild.id,
-                    sID: sID
-                })
-                return result
-            }catch (err){
-                return msg.reply(`I could not find a suggestion with that sID`)
-            }
-        })
+        let suggestion;
+        try{
+            const result = logSuggestionsSchema.findOne({
+                guild: msg.guild.id,
+                sID: sID
+            })
+            suggestion = result
+        }catch (err){
+            return msg.reply(`I could not find a suggestion with that sID`)
+        }
 
         const messageID = suggestion.mID
         const uID = suggestion.uID
 
-        const suggestChannel = await mongo()
-        .then(async mongoose => {
-            try{
-                const result = await suggestSchema.findOne({
-                    _id: msg.guild.id
-                })
-                return result
-            }catch(err){
-                return console.error(err)
-            }
-        })
+        let suggestChannel;
+        try{
+            const result = await suggestSchema.findOne({
+                _id: msg.guild.id
+            })
+            suggestChannel = result
+        }catch(err){
+            return console.error(err)
+        }
 
         const channel = msg.guild.channels.cache.find(c => c.id === suggestChannel.cID)
         if(!channel){
@@ -66,17 +62,13 @@ module.exports = {
         const targetMsg = await msg.channel.messages.fetch(messageID)
         targetMsg.delete()
         msg.delete()
-
-        return await mongo()
-        .then(async mongoose => {
-            try{
-                return logSuggestionsSchema.findOneAndDelete({
-                    guild: msg.guild.id,
-                    sID: sID,
-                })
-            }catch(err){
-                return console.error(err)
-            }
-        })
+        try{
+            return logSuggestionsSchema.findOneAndDelete({
+                guild: msg.guild.id,
+                sID: sID,
+            })
+        }catch(err){
+            return console.error(err)
+        }
     }
 }

@@ -43,18 +43,15 @@ module.exports = {
                     let warn = true;
 
                     try{
-                        await mongo()
-                        .then(async mongoose => {
-                            await blacklistSchema.findOneAndUpdate({
-                                _id: msg.guild.id
-                            },{
-                                $push: {
-                                    words: args
-                                },
-                                warns: warn
-                            }, {
-                                upsert: true
-                            })
+                        await blacklistSchema.findOneAndUpdate({
+                            _id: msg.guild.id
+                        },{
+                            $push: {
+                                words: args
+                            },
+                            warns: warn
+                        }, {
+                            upsert: true
                         })
                     } catch(err){
                          console.error(`Error at blacklist(43): ${err}`)
@@ -67,18 +64,15 @@ module.exports = {
                     let warn = false;
 
                     try{
-                        await mongo()
-                        .then(async mongoose => {
-                            await blacklistSchema.findOneAndUpdate({
-                                _id: msg.guild.id
-                            },{
-                                $push: {
-                                    args
-                                },
-                                warns: warn
-                            }, {
-                                upsert: true
-                            })
+                        await blacklistSchema.findOneAndUpdate({
+                            _id: msg.guild.id
+                        },{
+                            $push: {
+                                args
+                            },
+                            warns: warn
+                        }, {
+                            upsert: true
                         })
                     } catch (err){
                         console.error(`Error at blacklist(67): ${err}`)
@@ -87,7 +81,7 @@ module.exports = {
                     msg.reply(`Blacklist updated`)
                     return msg.delete();
                 } else{
-                    msg.reply(`An error occured`)
+                    return msg.reply(`An error occured`)
                 }
             }) 
         }
@@ -95,24 +89,22 @@ module.exports = {
 }
 
 module.exports.checkBlacklist = async (guildID, client, msg) => {
-    await mongo()
-    .then(async mongoose => {
-        for(const guild of client.guilds.cache){
-            const result = await blacklistSchema.findOne({ _id: guildID })
-            if(result){
-                for(let i = 0; i < result.words.length; i++){
-                    if(msg.content.includes(`${result.words[i]}`)){
-                        msg.delete();
-                        if(result.warns === true){
-                            return msg.reply(`That word is not allowed in this server!`)
-                        } else {
-                            return
-                        }
+
+    for(const guild of client.guilds.cache){
+        const result = await blacklistSchema.findOne({ _id: guildID })
+        if(result){
+            for(let i = 0; i < result.words.length; i++){
+                if(msg.content.includes(`${result.words[i]}`)){
+                    msg.delete();
+                    if(result.warns === true){
+                        return msg.reply(`That word is not allowed in this server!`)
+                    } else {
+                        return
                     }
                 }
-            } else {
-                return
             }
+        } else {
+            return
         }
-    })
+    }
 }

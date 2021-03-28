@@ -26,7 +26,7 @@ module.exports = {
 
         await antiad(msg)
         .then((result) => {
-            if(result.desired === true){
+            if(result && result.desired === true){
                 antiadResult = `✅ Antiad has been configured`
             } else{
                 antiadResult = `❌ Antiad not setup. Please use <prefix>antiad to set up if desired (blocks invites)`
@@ -35,7 +35,7 @@ module.exports = {
 
         await blacklist(msg)
         .then(result => {
-            if(result.words){
+            if(result && result.words){
                 blacklistResult = `✅ Blacklist has been configured`
             } else {
                 blacklistResult = `❌ Blacklist not setup. Please use <prefix>blacklist + <words you want to blacklist> if desired. (blocks specific words)`
@@ -44,7 +44,7 @@ module.exports = {
 
         await prefix(msg)
         .then(result => {
-            if(result.prefix){
+            if(result && result.prefix){
                 prefixResult = `✅ Guild prefix has been configured`
             } else {
                 prefixResult = `❌ Custom prefix not configured. For a custom prefix please use <b!setprefix> + <desired prefix>`
@@ -53,28 +53,27 @@ module.exports = {
 
         await guildRoles(msg)
         .then(async result => {
-            if(result){
-                const guildR = await guildRoles(msg)
-                if(guildR.admin && guildR.base && guildR.mute){
-                    guildRolesResult += `✅ All guild roles configured`
-                } else{
-                    guildRolesResult += `❌ Not all guild roles configured.`
-                    if(!guildR.admin){
-                        guildRolesResult += `\n> ❌ **Admin:** has not been configured. Please use <prefix>setadminroles + admin roles if desired`
-                    }
-                    if(!guildR.base){
-                        guildRolesResult += `\n> ❌ **Base Member:** has not been configured. Please use <prefix>setmemberrole + member role if desired`
-                    }
-                    if(!guildR.mute){
-                        guildRolesResult += `\n> ❌ **Mute Role:** has not been configured. Please use <prefix>setmuterole + mute role if desired (required to use mute command)`
-                    }
+            if(result && result.admin && result.base && result.mute){
+                guildRolesResult += `✅ All guild roles configured`
+            } else if(!result){
+                guildRolesResult += `❌ Not all guild roles configured. Please use adminhelp command to see configurable roles.`
+            } else {
+                guildRolesResult += `❌ Not all guild roles configured.`
+                if(!result.admin){
+                    guildRolesResult += `\n> ❌ **Admin:** has not been configured. Please use <prefix>setadminroles + admin roles if desired`
+                }
+                if(!result.base){
+                    guildRolesResult += `\n> ❌ **Base Member:** has not been configured. Please use <prefix>setmemberrole + member role if desired`
+                }
+                if(!result.mute){
+                    guildRolesResult += `\n> ❌ **Mute Role:** has not been configured. Please use <prefix>setmuterole + mute role if desired (required to use mute command)`
                 }
             }
         })
 
         await logs(msg)
         .then(result => {
-            if(result.cID){
+            if(result && result.cID){
                 logsResult = `✅ Logs channel has been configured`
             } else {
                 logsResult = `❌ Logs channel not configured. Please use <prefix>setlogschannel + <channel> if desired. (Required for logs)`
@@ -83,14 +82,15 @@ module.exports = {
 
         await suggest(msg)
         .then(result => {
-            if(result.cID && result.aCID){
+            if(result && result.cID && result.aCID){
                 suggestResult = `✅ All suggest channel have been configured`
+            } else if (!result) {
+                suggestResult = `❌ All suggest channels not configured. Please use <prefix>setsuggestchannel + <channel> if desired. (Required for suggestions)`
             } else {
-                suggestResult = `❌ All suggest channels not configured. Please use <prefix>setlogschannel + <channel> if desired. (Required for logs)`
-                if(!result.cID){
+                if(!result.cID || result.cID === null){
                     suggestResult += `\n> ❌ **Suggestions Channel:** Not configured. Use <prefix>setsuggestchannel + <targetchannel> (required for <prefix>suggest)`
                 }
-                if(!result.aCID){
+                if(!result.aCID || result.aCID === null){
                     suggestResult += `\n> ❌ **Approval Channel:** Not configured. Use <prefix>setapprovalchannel + <targetchannel> (required for <prefix>approve)`
                 }
             }
@@ -98,7 +98,7 @@ module.exports = {
 
         await tickets(msg)
         .then(result => {
-            if(result.cID){
+            if(result && result.cID){
                 ticketsResult = `✅ Tickets category has been configured`
             } else {
                 ticketsResult = `❌ Tickets category not set. Please use <prefix>setticketcategory + <ticket catgory ID> (required for tickets)`
@@ -107,7 +107,7 @@ module.exports = {
 
         await welcome(msg)
         .then(result => {
-            if(result.channelID){
+            if(result && result.channelID){
                 welcomeResult = `✅ Welcome channel has been set.`
             } else {
                 welcomeResult = `❌ Welcome channel has not been configured. Please use <prefix>welcome + <target channel> if desired`
@@ -120,6 +120,7 @@ module.exports = {
                 .setColor("#486dAA")
                 .setDescription(`${antiadResult}\n\
                                 ${blacklistResult}\n\
+                                ${prefixResult}\n\
                                 ${guildRolesResult}\n\
                                 ${logsResult}\n\
                                 ${suggestResult}\n\
@@ -132,113 +133,89 @@ module.exports = {
 }
 
 const antiad = async (msg) => {
-     return await mongo()
-    .then(async mongoose => {
-        try{
-            const result = antiAdSchema.findOne({
-                _id: msg.guild.id
-            })
-            return result
-        } catch (err){
-            return console.error(err)
-        }
-    })
+    try{
+        const result = antiAdSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result
+    } catch (err){
+        return console.error(err)
+    }
 }
 
 const blacklist = async (msg) => {
-     return await mongo()
-    .then(async mongoose => {
-        try{
-            const result = blacklistSchema.findOne({
-                _id: msg.guild.id
-            })
-            return result
-        } catch (err){
-            return console.error(err)
-        }
-    })
+    try{
+        const result = blacklistSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result
+    } catch (err){
+        return console.error(err)
+    }
 }
 
 const prefix = async (msg) => {
-     return await mongo()
-    .then(async mongoose => {
-        try{
-            const result = commandPrefixSchema.findOne({
-                _id: msg.guild.id
-            })
-            return result
-        } catch (err){
-            return console.error(err)
-        }
-    })
+    try{
+        const result = commandPrefixSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result
+    } catch (err){
+        return console.error(err)
+    }
 }
 
 const guildRoles = async (msg) => {
-     return await mongo()
-    .then(async mongoose => {
-        try{
-            const result = guildRolesSchema.findOne({
-                _id: msg.guild.id
-            })
-            return result;
-        } catch (err){
-            return console.error(err)
-        }
-    })
+    try{
+        const result = guildRolesSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result;
+    } catch (err){
+        return console.error(err)
+    }
 }
 
 const logs = async (msg) => {
-     return await mongo()
-    .then(async mongoose => {
-        try{
-            const result = logsSchema.findOne({
-                _id: msg.guild.id
-            })
-            return result
-        } catch (err){
-            return console.error(err)
-        }
-    })
+    try{
+        const result = logsSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result
+    } catch (err){
+        return console.error(err)
+    }
 }
 
 const suggest = async (msg) => {
-    return await mongo()
-   .then(async mongoose => {
-       try{
-           const result = suggestSchema.findOne({
-               _id: msg.guild.id
-           })
-           return result
-       } catch (err){
-           return console.error(err)
-       }
-   })
+    try{
+        const result = suggestSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result
+    } catch (err){
+        return console.error(err)
+    }
 }
 
 const tickets = async (msg) => {
-     return await mongo()
-    .then(async mongoose => {
-        try{
-            const result = ticketSchema.findOne({
-                _id: msg.guild.id
-            })
-            return result
-        } catch (err){
-            return console.error(err)
-        }
-    })
+    try{
+        const result = ticketSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result
+    } catch (err){
+        return console.error(err)
+    }
 }
 
 const welcome = async (msg) => {
-     return await mongo()
-    .then(async mongoose => {
-        try{
-            const result = welcomeSchema.findOne({
-                _id: msg.guild.id
-            })
-            return result
-        } catch (err){
-            return console.error(err)
-        }
-    })
+    try{
+        const result = welcomeSchema.findOne({
+            _id: msg.guild.id
+        })
+        return result
+    } catch (err){
+        return console.error(err)
+    }
 }
