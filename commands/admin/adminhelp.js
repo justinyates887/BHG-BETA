@@ -57,7 +57,7 @@ module.exports = {
                                                         > ${prefix}createrole (creates a role with the color and name you specify [color must be hex and  is optional])\n\
                                                         > ${prefix}deletechannel (deletes targeted channel)\n\
                                                         > ${prefix}deleterole (deletes targeted role)\n\
-                                                        > ${prefix}invites (tracks current invites created by user and how many times they've been used)\n\
+                                                        > ${prefix}leaderboard (tracks current invites created by user and how many times they've been used. deafult is top ten, but you can specify a number up to 25)\n\
                                                         > ${prefix}nuke (deletes all contents of channel and clones it)\n\
                                                         > ${prefix}purge (purges selected unmber of messages from channel)`},
                     { name: 'Ticket Commands', value: `> ${prefix}add (Adds a targeted user to the ticket)\n\

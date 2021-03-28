@@ -20,7 +20,7 @@ module.exports = async (client, guild) => {
 }
 
 //this function will delete all guild data on guild remove
-module.exports.deleteAllData = async (guildID) => {
+const deleteAllData = async (guildID) => {
     return await mongo()
     .then(async mongoose => {
         try{
@@ -96,3 +96,5 @@ module.exports.deleteAllData = async (guildID) => {
         } 
     })
 }
+
+module.exports.deleteAllData = deleteAllData
