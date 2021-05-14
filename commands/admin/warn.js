@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 const warnSchema = require('../setup/schemas/warn-schema')
 const mongo = require('../../mongo')
 const { getRoles } = require('../setup/getRoles')
+const { checkLogs } = require('../setup/setlogschannel')
 
 module.exports = {
     name: 'warn',
