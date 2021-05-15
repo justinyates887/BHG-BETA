@@ -65,7 +65,8 @@ module.exports = {
 
         const warning = {
             author: msg.member.user.tag,
-            timestamp: new Date().getTime(),
+            timestamp: new Date().toDateString(),
+            target: `${target.username}#${target.discriminator}`,
             warnReason
         }
             try{
@@ -96,19 +97,19 @@ module.exports = {
             }
         }
 
-        const logs = await checkLogs(msg.user.guild.id)
+        const logs = await checkLogs(msg.guild.id)
         if(logs.desired === true){
-            const target = msg.user.guild.channels.cache.find(channel => channel.id === logs.cID)
+            const t = msg.guild.channels.cache.find(channel => channel.id === logs.cID)
             if (bhconfig.embeds === true) {
                 let embed = new Discord.MessageEmbed()
                     .setAuthor("📝 Warning Issued")
                     .setColor("#FFDF00")
-                    .setDescription(`A warning was just issued by <@${msg.user.id} to <#${target}> for: ${warnReason}`)
+                    .setDescription(`A warning was just issued by <@${msg.member.user.id}> to <@${target}> for: ${warnReason}`)
                     .setFooter(bhconfig.footer)
-                target.send(embed);
+                t.send(embed);
             }
             else {
-                target.send(`A warning was just issued by <@${msg.user.id} to <#${target}> for: ${warnReason}`)
+                t.send(`A warning was just issued by <@${msg.user.id} to <#${target}> for: ${warnReason}`)
         }
       }
 
