@@ -101,14 +101,14 @@ module.exports = {
             const target = msg.user.guild.channels.cache.find(channel => channel.id === logs.cID)
             if (bhconfig.embeds === true) {
                 let embed = new Discord.MessageEmbed()
-                    .setAuthor("📝 Giveaway Started!")
+                    .setAuthor("📝 Warning Issued")
                     .setColor("#FFDF00")
-                    .setDescription(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+                    .setDescription(`A warning was just issued by <@${msg.user.id} to <#${target}> for: ${warnReason}`)
                     .setFooter(bhconfig.footer)
                 target.send(embed);
             }
             else {
-                target.send(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+                target.send(`A warning was just issued by <@${msg.user.id} to <#${target}> for: ${warnReason}`)
         }
       }
 
