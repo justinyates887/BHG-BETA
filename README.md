@@ -53,6 +53,8 @@ Justin Yates & Azrael
 
 > - [v4.0.0](#v4)
 
+> - [v5.0.0](#v5)
+
 > - [Current Issues](#current-issues)
 
 ---------------------------------------------------------------------------------------------------------------------------
@@ -131,6 +133,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - [x] Captcha verification
 - Reaction roles
 
+
+---------------------------------------------------------------------------------------------------------------------------
+
+## <a name="v5"></a>Expected in version 5.0.0 (The Premium Update)
+- Youtube/Twitch notifications
+- Customizable announcments
+- Customizable welcome image and message
+- Reaction Roles
+- Twitter notifications
+- Gamble feature with currency
+- Birthday announcments
+- Lyrics for music
+- Slash commands with enable/disable feature
+- Levels overhaul (Custom xp rate, custom level up message, auto-role on certain level, set level up announcment channel, rank card, no-xp roles and channels, etc.)
+- Disabling unwanted commands afer setup
 
 ---------------------------------------------------------------------------------------------------------------------------
 
