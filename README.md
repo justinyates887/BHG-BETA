@@ -149,6 +149,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Levels overhaul (Custom xp rate, custom level up message, auto-role on certain level, set level up announcment channel, rank card, no-xp roles and channels, etc.) (P-ish)
 - Disabling unwanted commands afer setup
 - Application command with configurable applications (Will work like tickets) (P)
+- Embed (similar to announcments but with custamization)
 
 ---------------------------------------------------------------------------------------------------------------------------
 
