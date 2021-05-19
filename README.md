@@ -150,6 +150,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - Disabling unwanted commands afer setup
 - Application command with configurable applications (Will work like tickets) (P)
 - Embed (similar to announcments but with custamization)
+- Logs Customization
 
 ---------------------------------------------------------------------------------------------------------------------------
 
