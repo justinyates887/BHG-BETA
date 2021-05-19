@@ -1,7 +1,7 @@
 const bhconfig = require("../core/bhconfig.json");
 const Discord = require("discord.js");
 const warnSchema = require('../setup/schemas/warn-schema')
-const mongo = require('../../mongo')
+const { random } = require('../user/suggest')
 const { getRoles } = require('../setup/getRoles')
 const { checkLogs } = require('../setup/setlogschannel')
 
@@ -64,6 +64,7 @@ module.exports = {
         }
 
         const warning = {
+            wID: random(16),
             author: msg.member.user.tag,
             timestamp: new Date().toDateString(),
             target: `${target.username}#${target.discriminator}`,

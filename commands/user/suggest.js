@@ -70,3 +70,5 @@ const random = (size) => {
     return generatedOutput;
  }
 
+ module.exports = {random};
+
