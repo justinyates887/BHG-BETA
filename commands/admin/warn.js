@@ -1,7 +1,7 @@
 const bhconfig = require("../core/bhconfig.json");
 const Discord = require("discord.js");
 const warnSchema = require('../setup/schemas/warn-schema')
-const mongo = require('../../mongo')
+const { random } = require('../user/suggest')
 const { getRoles } = require('../setup/getRoles')
 const { checkLogs } = require('../setup/setlogschannel')
 
@@ -64,8 +64,10 @@ module.exports = {
         }
 
         const warning = {
+            wID: random(16),
             author: msg.member.user.tag,
-            timestamp: new Date().getTime(),
+            timestamp: new Date().toDateString(),
+            target: `${target.username}#${target.discriminator}`,
             warnReason
         }
             try{
@@ -96,19 +98,19 @@ module.exports = {
             }
         }
 
-        const logs = await checkLogs(msg.user.guild.id)
+        const logs = await checkLogs(msg.guild.id)
         if(logs.desired === true){
-            const target = msg.user.guild.channels.cache.find(channel => channel.id === logs.cID)
+            const t = msg.guild.channels.cache.find(channel => channel.id === logs.cID)
             if (bhconfig.embeds === true) {
                 let embed = new Discord.MessageEmbed()
-                    .setAuthor("📝 Giveaway Started!")
+                    .setAuthor("📝 Warning Issued")
                     .setColor("#FFDF00")
-                    .setDescription(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+                    .setDescription(`A warning was just issued by <@${msg.member.user.id}> to <@${target}> for: ${warnReason}`)
                     .setFooter(bhconfig.footer)
-                target.send(embed);
+                t.send(embed);
             }
             else {
-                target.send(`A giveaway was just started by <@${msg.user.id} in <#${msg.channel.id}>:`)
+                t.send(`A warning was just issued by <@${msg.user.id} to <#${target}> for: ${warnReason}`)
         }
       }
 
