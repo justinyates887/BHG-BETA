@@ -67,7 +67,7 @@ module.exports = {
                     { name: 'Economy', value: `> ${prefix}addbal (adds specified balance to user's economy profile within your server)\n\
                                                 >${prefix}removebal (removes balance from a specified user)`},
                     { name: 'Server Wellbeing', value: `> ${prefix}deletedata (By default when you kick our bot form your server all of your data is automatically deleted.\
-                                                                    if you, however, wish to manually do this, the deletedata command will wipe any and all saved data fromy our server.\n\n\
+                                                                    if you, however, wish to manually do this, the deletedata command will wipe any and all saved data from our server.\n\n\
                                                                     **Note:** The only data we store is directly related to the bots functionality and your server's customization.)`}
                 )
                 .setTimestamp()
