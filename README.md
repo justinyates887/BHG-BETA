@@ -15,7 +15,7 @@
 
 ### This Repo is the *beta*
 
-For the stable repo go to: [GitHub](https://github.com/Small-Blue-Development/the-blue-haired-girl-v2.0)
+For the stable repo go to: [GitHub](https://github.com/Azrael747/Blue-Haired-Girl-3.4.0-Stable)
 
 ---------------------------------------------------------------------------------------------------------------------------
 
