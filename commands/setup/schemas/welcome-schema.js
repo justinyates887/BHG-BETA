@@ -8,6 +8,12 @@ const welcomeSchema = mongoose.Schema({
     channelID: {
         type: String,
         required: true
+    },
+    message: {
+        type: String,
+    },
+    image: {
+        type: String
     }
 })
 
