@@ -1,0 +1,6 @@
+Version 5.0.0:
+
+08/16/2021 (J)
+- added applications and socials schema
+- fixed welcome schema to include a custom message and background for premium users
+- added comments to logs schema to roadmap refactoring and fixes
